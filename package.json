@@ -1,5 +1,5 @@
 {
-  "name": "apostrophe-area-editor",
+  "name": "apostrophe-editor-2",
   "version": "0.1.0",
   "description": "A new content area editor for Apostrophe. Integrates ckeditor and allows the option of using other rich text editors. Alternative content area editors can also be created following the same interface.",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/punkave/apostrophe-area-editor.git"
+    "url": "https://github.com/punkave/apostrophe-editor-2.git"
   },
   "keywords": [
     "apostrophe",
@@ -20,5 +20,9 @@
     "cms"
   ],
   "author": "P'unk Avenue LLC",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "extend": "~1.2.1",
+    "underscore": "~1.5.2"
+  }
 }
