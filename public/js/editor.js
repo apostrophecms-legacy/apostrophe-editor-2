@@ -16,6 +16,8 @@ function AposEditor2($el) {
 
   var self = this;
   self.$el = $el;
+  // So serialize can be invoked from the outside world
+  self.$el.data('editor', self);
   self.options = JSON.parse(self.$el.attr('data-options'));
   var instances = {};
 
@@ -220,7 +222,7 @@ function AposEditor2($el) {
   // template to be copied if the "+" button is used to add content after an
   // individual item. Then prepend the original one as the main add content menu.
   self.addTopContentMenu = function(callback) {
-    $.post(self.contentMenuUrl || '/apos-area-editor/content-menu',
+    $.post(self.contentMenuUrl || '/apos-editor-2/content-menu',
       { controls: self.options.controls },
       function(data) {
       var $menu = $(data);
@@ -760,12 +762,7 @@ function AposEditor2($el) {
   };
 }
 
-// TODO: this is deeply wrong (: We need to figure out a clean way to indicate
-// whether an area is self-saving, or part of a snippet etc., without using
-// the edit button as the indicator as we did with AposEditor1. This is a
-// hack to get AposEditor2 into Kyle's hands for a bit
-
-AposEditor2.enable = function() {
+AposEditor2.enableAll = function() {
   $('.apos-area[data-editable]').each(function() {
     var $el = $(this);
     if ($el.attr('data-initialized')) {
@@ -776,9 +773,18 @@ AposEditor2.enable = function() {
   });
 };
 
-$(function() {
+AposEditor2.auto = function() {
+  // For areas present at page load
   $('body').on('aposReady', function() {
-    AposEditor2.enable();
+    AposEditor2.enableAll();
   });
+  // For areas added later, this event is individually triggered
+  $('body').on('aposNewArea', function() {
+    AposEditor2.enableAll();
+  });
+};
+
+$(function() {
+  AposEditor2.auto();
 });
 

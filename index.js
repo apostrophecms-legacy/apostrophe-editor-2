@@ -1,5 +1,6 @@
 var extend = require('extend');
 var _ = require('underscore');
+var clone = require('clone');
 
 module.exports = function(options, callback) {
   return new Construct(options, callback);
@@ -20,7 +21,7 @@ function Construct(options, callback) {
     var options = {};
     extend(true, options, optionsArg);
     options.fs = __dirname;
-    options.web = '/apos-area-editor';
+    options.web = '/apos-editor-2';
     return apos.pushAsset(type, name, options);
   };
 
@@ -37,12 +38,13 @@ function Construct(options, callback) {
     return apos.partial(name, data, __dirname + '/views');
   };
 
-  app.post('/apos-area-editor/content-menu', function(req, res) {
+  app.post('/apos-editor-2/content-menu', function(req, res) {
     var controls;
     if (req.body.controls) {
       controls = apos.sanitizeTags(req.body.controls);
     } else {
-      controls = apos.defaultControls;
+      // So we don't inadvertently modify the original
+      controls = clone(apos.defaultControls);
     }
     richText = apos.sanitizeBoolean(req.query.richText, true);
     if (richText) {
@@ -52,7 +54,7 @@ function Construct(options, callback) {
   });
 
   // Serve our assets
-  app.get('/apos-area-editor/*', apos.static(__dirname + '/public'));
+  app.get('/apos-editor-2/*', apos.static(__dirname + '/public'));
 
   // Constructor name for our client side object that edits areas and should be
   // instantiated whenever an area the user has permission to output is present
