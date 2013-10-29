@@ -785,6 +785,8 @@ AposEditor2.auto = function() {
 };
 
 $(function() {
+  // Note we do this at DOMready, so if you want to hack it for some reason,
+  // you have time to monkeypatch before it is invoked
   AposEditor2.auto();
 });
 
