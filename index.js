@@ -13,6 +13,7 @@ function Construct(options, callback) {
 
   var self = this;
 
+  console.log('editor-2');
   // TODO: refactor the .modules stuff from snippets/index.js so we can do easy
   // overrides of templates here and in any module, don't keep copying all that code
 

@@ -778,6 +778,7 @@ AposEditor2.enable = function() {
 
 $(function() {
   $('body').on('aposReady', function() {
+    apos.log('aposReady');
     AposEditor2.enable();
   });
 });

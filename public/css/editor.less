@@ -2,6 +2,16 @@
 {
   width: 100%;
 }
+
+.apos-rich-text:focus
+{
+  outline: 1px dashed rgba(0,0,0,0.3);
+
+  // For now, I have set outline for none. Can't decide if it is better this way.
+  // - kerry
+  outline: none;
+}
+
 .apos-editor2-item-separator
 {
   width: 100%;
@@ -45,4 +55,12 @@
 {
   display: inline-block;
   .apos-editor2-temp-button;
+}
+
+
+// rich text content
+.apos-rich-text
+{
+  strong { font-weight: bold; }
+  em { font-style: italic; }
 }
