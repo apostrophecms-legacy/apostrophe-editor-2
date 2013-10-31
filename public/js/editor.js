@@ -21,6 +21,11 @@ function AposEditor2($el) {
   self.options = JSON.parse(self.$el.attr('data-options'));
   var instances = {};
 
+  // Selectors to locate items and lockups without crossing into
+  // the rendered content of a widget such as the blog widget
+  var selItems = '.apos-item:not(.apos-widget .apos-item)';
+  var selLockups = '.apos-lockup:not(.apos-widget .apos-lockup)';
+
   self.init = function() {
     self.$el.on('click', '[data-add-item-type]', function() {
       var itemType = $(this).attr('data-add-item-type');
@@ -87,9 +92,8 @@ function AposEditor2($el) {
       return false;
     });
 
-    self.$el.on('click', '[data-rich-text]', function() {
-      var $richText = $(this).closest('[data-rich-text]');
-      return self.editRichText($richText);
+    self.$el.on('click', '[data-rich-text]:not(.apos-widget [data-rich-text])', function() {
+      return self.editRichText($(this));
     });
 
     self.$el.on('click', '[data-trash-item]', function() {
@@ -356,12 +360,14 @@ function AposEditor2($el) {
   // make the rich text items droppable
   self.addButtonsToExistingItems = function() {
     var $items;
-    $items = self.$el.find('.apos-item');
+    // Use the :not selector to avoid recursing into widgets that include
+    // areas in their rendered output
+    $items = self.$el.find(selItems);
     $items.each(function() {
       var $item = $(this);
       self.addButtonsToItem($item);
     });
-    $items = self.$el.find('.apos-lockup');
+    $items = self.$el.find(selLockups);
     $items.each(function() {
       var $item = $(this);
       self.addButtonsToLockup($item);
@@ -403,7 +409,7 @@ function AposEditor2($el) {
       $area.find('.apos-normal-view .apos-content').prepend(self.newSeparator());
     });
 
-    var $elements = $areas.find('.apos-item, .apos-lockup');
+    var $elements = $areas.find(selItems + ',' + selLockups);
     // Counter so we can peek ahead
     var i = 0;
     $elements.each(function() {
@@ -764,7 +770,7 @@ function AposEditor2($el) {
   // storage in an area.
   self.serialize = function() {
     var items = [];
-    $el.find('.apos-item').each(function() {
+    $el.find(selItems).each(function() {
       var $item = $(this);
       var item;
       if ($item.hasClass('apos-widget')) {
