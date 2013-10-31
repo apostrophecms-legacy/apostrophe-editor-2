@@ -193,7 +193,64 @@ function AposEditor2($el) {
         $richText.attr('id', id);
       }
       $richText.attr('contenteditable', 'true');
-      var instance = instances[id] = CKEDITOR.inline(id);
+      var toolbar = [];
+
+      // Translate classic A2 control names to ckeditor control names.
+      // You can also use native ckeditor control names. A good reference
+      // is tough to find, but see: http://ckeditor.com/forums/CKEditor/Complete-list-of-toolbar-items
+
+      var a2ToCkControls = {
+        'style': 'Styles',
+        'bold': 'Bold',
+        'italic': 'Italic',
+        'createLink': 'Link',
+        'unlink': 'Unlink',
+        'insertUnorderedList': 'BulletedList',
+        'insertNumberedList': 'NumberedList',
+        'insertTable': 'Table'
+      };
+
+      // Accept universal A2 or ckeditor-specific styleset definition.
+      // We don't allow attributes or CSS styles here because A2's
+      // philosophy calls for styling simple elements to suit the project
+      // and filtering all markup server-side to remove any unwanted
+      // CSS inconsistent with the project's style guide.
+
+      var styles = _.map(self.options.styles, function(style) {
+        return {
+          name: style.name || style.label,
+          element: style.element || style.value
+        };
+      });
+
+      // Allow both universal A2 and ckeditor-specific controls in the toolbar.
+      // Don't worry about widgets, those are presented separately.
+
+      _.each(self.options.controls, function(control) {
+        if (!apos.widgetTypes[control]) {
+          if (a2ToCkControls[control]) {
+            toolbar.push(a2ToCkControls[control]);
+          } else {
+            toolbar.push(control);
+          }
+          if (control === 'createLink') {
+            // The classic A2 editor offers both anchor and regular links in a
+            // single dialog, so make sure that in addition to Link, we also
+            // offer ckeditor's Anchor
+            //
+            // TODO: why won't this work?
+            toolbar.push('Anchor');
+          }
+        }
+      });
+
+      var config = {
+        toolbar: [ toolbar ],
+        stylesSet: styles
+      };
+
+      var instance = instances[id] = CKEDITOR.inline(id, config);
+
       // Why is this necessary? Without it we don't get focus. If we don't use a timeout
       // focus is stolen back. As it is we still lose our place in the text. ):
       setTimeout(function() {
