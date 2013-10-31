@@ -688,6 +688,7 @@ function AposEditor2($el) {
           delete data.lockup;
         }
         self.putWidgetData($item, data);
+        self.reRenderWidget($item);
       }
     });
     $lockup.before($items);
