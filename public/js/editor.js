@@ -403,11 +403,11 @@ function AposEditor2($el) {
     $areas.each(function() {
       var $area = $(this);
       var $ancestor = $draggable.closest('.apos-area[data-editable]');
+      $area.addClass('apos-dragging');
       if (($area[0] === $ancestor[0]) && (!$draggable.prev().length)) {
         return;
       }
       $area.find('.apos-normal-view .apos-content').prepend(self.newSeparator());
-      $area.addClass('apos-dragging');
     });
 
     var $elements = $areas.find(selItems + ',' + selLockups);
