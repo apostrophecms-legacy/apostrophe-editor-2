@@ -407,6 +407,7 @@ function AposEditor2($el) {
         return;
       }
       $area.find('.apos-normal-view .apos-content').prepend(self.newSeparator());
+      $area.addClass('apos-dragging');
     });
 
     var $elements = $areas.find(selItems + ',' + selLockups);
@@ -432,6 +433,7 @@ function AposEditor2($el) {
   };
 
   self.removeSeparators = function() {
+    $('.apos-area').removeClass('apos-dragging');
     $('[data-drag-item-separator]:not(.apos-template)').remove();
   };
 
