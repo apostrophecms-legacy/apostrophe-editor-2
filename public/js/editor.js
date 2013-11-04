@@ -403,6 +403,7 @@ function AposEditor2($el) {
     $areas.each(function() {
       var $area = $(this);
       var $ancestor = $draggable.closest('.apos-area[data-editable]');
+      $area.addClass('apos-dragging');
       if (($area[0] === $ancestor[0]) && (!$draggable.prev().length)) {
         return;
       }
@@ -432,6 +433,7 @@ function AposEditor2($el) {
   };
 
   self.removeSeparators = function() {
+    $('.apos-area').removeClass('apos-dragging');
     $('[data-drag-item-separator]:not(.apos-template)').remove();
   };
 
