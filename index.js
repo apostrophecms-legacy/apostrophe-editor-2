@@ -51,7 +51,7 @@ function Construct(options, callback) {
     if (richText) {
       controls.unshift('richText');
     }
-    return res.send(self.render('contentMenu', { controls: controls, itemTypes: apos.itemTypes, richText: richText }));
+    return res.send(self.render('contentMenu', { controls: controls, itemTypes: apos.itemTypes, richText: richText, addLabel: req.body.addLabel }));
   });
 
   // Serve our assets

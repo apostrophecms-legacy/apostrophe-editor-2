@@ -1,7 +1,7 @@
 <ul data-content-menu class="apos-editor2-content-menu">
   {# js will strip out the toggle span when the "add" button is being used. #}
   {# When the menu is at the top of an area the toggle span does appear. #}
-  <li><span data-content-menu-toggle>Add Content ▼</span>
+  <li><span data-content-menu-toggle>{% if addLabel %}{{ addLabel | e }}{% else %}Add Content{%endif %} ▼</span>
     <ul class="apos-editor2-content-menu-options" data-content-menu-options>
       {% for control in controls %}
         {# Bold, italic, etc. are not item types, here we pay attention only to controls that are #}
