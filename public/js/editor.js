@@ -284,7 +284,7 @@ function AposEditor2($el) {
   // individual item. Then prepend the original one as the main add content menu.
   self.addTopContentMenu = function(callback) {
     $.post(self.contentMenuUrl || '/apos-editor-2/content-menu',
-      { controls: self.options.controls },
+      { controls: self.options.controls, richText: self.options.richText },
       function(data) {
       var $menu = $(data);
       self.$contentMenuTemplate = $menu.clone();

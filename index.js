@@ -47,7 +47,7 @@ function Construct(options, callback) {
       // So we don't inadvertently modify the original
       controls = clone(apos.defaultControls);
     }
-    richText = apos.sanitizeBoolean(req.query.richText, true);
+    richText = apos.sanitizeBoolean(req.body.richText, true);
     if (richText) {
       controls.unshift('richText');
     }
