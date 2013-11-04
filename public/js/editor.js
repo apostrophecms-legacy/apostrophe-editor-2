@@ -330,7 +330,7 @@ function AposEditor2($el) {
   // Add controls to a lockup, and make it draggable as appropriate
   self.addButtonsToLockup = function($lockup) {
     var $lockupButtons;
-    $lockup.find('.apos-editor2-lockup-buttons :not(.apos-template)').remove();
+    $lockup.find('.apos-editor2-lockup-buttons:not(.apos-template)').remove();
     $lockupButtons = apos.fromTemplate('.apos-editor2-lockup-buttons');
 
     var $typeTemplate = $lockupButtons.find('[data-lockup-type]');
@@ -376,11 +376,6 @@ function AposEditor2($el) {
 
   // Insert a newly created apos-widget, typically called by the widget's editor on save
   self.insertWidget = function($widget) {
-    // Newly created widgets need default position and size
-    $widget.attr('data-position', 'middle');
-    $widget.attr('data-size', 'full');
-    $widget.addClass('apos-middle');
-    $widget.addClass('apos-full');
     $widget.addClass('apos-item');
     self.insertItem($widget);
   };
@@ -389,7 +384,7 @@ function AposEditor2($el) {
     if (self.$insertItemContext && self.$insertItemContext.length) {
       self.$insertItemContext.after($item);
     } else {
-      self.$el.find('.apos-normal-view .apos-content').prepend($item);
+      self.$el.find('.apos-normal-view .apos-content:first').prepend($item);
     }
   };
 
@@ -407,7 +402,7 @@ function AposEditor2($el) {
       if (($area[0] === $ancestor[0]) && (!$draggable.prev().length)) {
         return;
       }
-      $area.find('.apos-normal-view .apos-content').prepend(self.newSeparator());
+      $area.find('.apos-normal-view .apos-content:first').prepend(self.newSeparator());
     });
 
     var $elements = $areas.find(selItems + ',' + selLockups);
@@ -456,7 +451,7 @@ function AposEditor2($el) {
 
   self.enableDropOnText = function($draggable) {
     var $areas = self.getDroppableAreas($draggable);
-    $areas.find('.apos-content .apos-rich-text-item').each(function() {
+    $areas.find(".apos-content .apos-rich-text-item:not('.apos-widget .apos-rich-text-item')").each(function() {
       var $item = $(this);
       // What we accept depends on which lockups allow which widgets. We can
       // automatically switch lockups if one lockup supports widget A and the
