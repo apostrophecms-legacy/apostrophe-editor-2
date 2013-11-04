@@ -174,7 +174,7 @@ function AposEditor2($el) {
       // will be queried for their content at the time the snippet is saved
       self.previousData = self.serialize();
       self.saveInterval = setInterval(self.saveIfNeeded, 5000);
-      $(window).on('unload', function() {
+      $(window).on('beforeunload', function() {
         // If there are outstanding changes when the user leaves the page,
         // attempt a synchronous save operation so we have a chance to complete
         // before leaving
@@ -811,9 +811,9 @@ function AposEditor2($el) {
         data: {
           slug: self.$el.attr('data-slug'),
           options: JSON.stringify(self.getAreaOptions(self.$el)),
-          content: JSON.stringify(data),
-          async: !sync
+          content: JSON.stringify(data)
         },
+        async: !sync,
         success: function() {
           self.previousData = data;
           apos.log('saved');
