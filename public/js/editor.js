@@ -19,6 +19,10 @@ function AposEditor2($el) {
   // So serialize can be invoked from the outside world
   self.$el.data('editor', self);
   self.options = JSON.parse(self.$el.attr('data-options'));
+  if (self.options.textOnly) {
+    // So it can be easily excluded in selectors for drag and drop
+    self.$el.attr('data-text-only', true);
+  }
   var instances = {};
 
   // Selectors to locate items and lockups without crossing into
@@ -453,7 +457,7 @@ function AposEditor2($el) {
 
     var $areas;
     if (betweenAreas) {
-      $areas = $('.apos-area[data-editable]');
+      $areas = $('.apos-area[data-editable]:not([data-text-only])');
     } else {
       $areas = $draggable.closest('.apos-area[data-editable]');
     }
