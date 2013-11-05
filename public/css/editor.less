@@ -175,7 +175,7 @@
 
 .apos-ui
 {
-  color: @white;
+  color: white;
   text-transform: uppercase;
   font-family: 'Cabin';  
   letter-spacing: 0.25em;
@@ -183,16 +183,30 @@
   font-weight: bold;  
 }
 
-.apos-ui-btn
+
+// .apos-area-controls
+// {
+//   .apos-ui-container;  
+// }
+
+.apos-singleton .apos-ui-container
 {
+  position: absolute;
+  z-index: 998;
+}
+
+.apos-ui-container .apos-ui-btn,
+.apos-ui-container .apos-button
+{
+  .apos-ui;
   display: inline-block;
   min-width: 36px;
+  line-height: 14px;
   background: @apos-base;
   
   text-shadow: 0.2em 0.1em rgba(0,0,0,0.2);
   padding: 0.65em 1em;
   
-  line-height: 0px;
   text-align: center;
   cursor: pointer;
 
