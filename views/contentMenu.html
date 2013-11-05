@@ -1,12 +1,12 @@
-<ul data-content-menu class="apos-editor2-content-menu">
+<ul data-content-menu class="apos-ui-container apos-ui apos-ui-dropdown">
   {# js will strip out the toggle span when the "add" button is being used. #}
   {# When the menu is at the top of an area the toggle span does appear. #}
-  <li><span data-content-menu-toggle>{% if addLabel %}{{ addLabel | e }}{% else %}Add Content{%endif %} ▼</span>
-    <ul class="apos-editor2-content-menu-options" data-content-menu-options>
+  <li><span class="apos-ui-btn" data-content-menu-toggle><i class="icon-plus"></i> {% if addLabel %}{{ addLabel | e }}{% else %}Add Content{%endif %}  </span>
+    <ul class="apos-editor2-content-menu-options apos-ui-menu" data-content-menu-options>
       {% for control in controls %}
         {# Bold, italic, etc. are not item types, here we pay attention only to controls that are #}
         {% if itemTypes[control] %}
-          <li data-add-item-type="{{ control }}">{{ itemTypes[control].label | e }}</li>
+          <li data-add-item-type="{{ control }}"><i class="icon-{{ control }} fw icon-fw"></i> {{ itemTypes[control].label | e }}</li>
         {% endif %}
       {% endfor %}
     </ul>
