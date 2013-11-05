@@ -164,10 +164,16 @@ function AposEditor2($el) {
       }
     };
 
-    self.addTopContentMenu(function() {
+    // Should we bring async into browserland? This would be more elegant if we did
+    if (!self.options.textOnly) {
+      self.addTopContentMenu(addButtons);
+    } else {
+      addButtons();
+    }
+    function addButtons() {
       self.addButtonsToExistingItems();
       self.$el.attr('data-initialized', 'true');
-    });
+    }
 
     if (self.$el.is('[data-save]')) {
       // Self-saving. Used for areas on regular pages. Areas in snippets
@@ -180,6 +186,11 @@ function AposEditor2($el) {
         // before leaving
         self.saveIfNeeded(true);
       });
+    }
+
+    // In text-only mode make sure there is a text to edit
+    if (self.options.textOnly && (!self.$el.find(selItems).length)) {
+      return self.addRichText();
     }
   };
 
@@ -296,7 +307,7 @@ function AposEditor2($el) {
   // Decorate a new or existing apos-widget with a top bar of buttons suitable for whatever can be
   // done to it "in context" in the editor - at a minimum, opening the widget's dialog
   self.addButtonsToWidget = function($widget) {
-    return self.addButtonsToItem($widget);
+    self.addButtonsToItem($widget);
   };
 
   // We decorate widgets and texts the same way in this editor. This is also a good place
@@ -324,6 +335,11 @@ function AposEditor2($el) {
       }
     } else {
       $item.draggable(self.draggableSettings);
+    }
+    if (self.options.textOnly) {
+      $item.find('[data-drag-item]').remove();
+      $item.find('[data-add-item]').remove();
+      $item.find('[data-trash-item]').remove();
     }
   };
 
@@ -850,4 +866,3 @@ $(function() {
   // you have time to monkeypatch before it is invoked
   AposEditor2.auto();
 });
-
