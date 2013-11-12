@@ -1,6 +1,16 @@
+@apos-base: rgb(247,160,50);
+@apos-base: #dd3226;
+
 .apos-editor2-item-buttons
 {
   width: 100%;
+  position: absolute;
+  z-index: 1;
+}
+
+.apos-editor2-item-separator
+{
+  border: 1px dashed @apos-base;
 }
 
 .apos-rich-text:focus
@@ -14,7 +24,7 @@
 
 .apos-editor2-hover
 {
-  background-color: blue;
+  background-color: fadeout(@apos-base, 40%);
 }
 
 // THIS MUST DIE! Tom's temporary hack for buttons that
@@ -44,6 +54,7 @@
 .apos-editor2-content-menu
 {
   display: inline-block;
+  z-index: 801;
   .apos-editor2-temp-button;
 }
 
@@ -61,87 +72,3 @@
   display: none !important;
 }
 
-@apos-base: rgb(247,160,50);
-@apos-base: #dd3226;
-
-@apos-lighten-10: lighten(@apos-base, 8%);
-
-@apos-shade-5: darken(@apos-base, 3%);
-@apos-shade-10: darken(@apos-base, 10%);
-@apos-shade-20: darken(@apos-base, 20%);
-@apos-shade-30: darken(@apos-base, 30%);
-
-
-/* GREYS */
-
-
-@apos-grey70: lighten(@apos-grey,70%);
-@apos-grey60: lighten(@apos-grey,60%);
-@apos-grey50: lighten(@apos-grey,50%);
-@apos-grey55: lighten(@apos-grey,55%);
-@apos-grey40: lighten(@apos-grey,40%);
-@apos-grey30: lighten(@apos-grey,30%);
-@apos-grey20: lighten(@apos-grey,20%);
-@apos-grey10: lighten(@apos-grey,10%);
-
-@apos-grey: rgb(50,50,50);
-@apos-grey-light: rgb(238, 238, 238);
-
-@apos-grey-10: darken(@apos-grey,10%);
-@apos-grey-20: darken(@apos-grey,20%);
-
-
-.apos-bg-gradient {
-  /* fallback */
-  background-color: @apos-base;
-  /* Safari 4-5, Chrome 1-9 */
-  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(@apos-base), to(@apos-lighten-10));
-  /* Safari 5.1, Chrome 10+ */
-  background: -webkit-linear-gradient(top, @apos-base, @apos-lighten-10);
-  /* Firefox 3.6+ */
-  background: -moz-linear-gradient(top, @apos-base, @apos-lighten-10);
-  /* IE 10 */
-  background: -ms-linear-gradient(top, @apos-base, @apos-lighten-10);
-}
-
-.apos-border-clip
-{
-  -moz-background-clip: padding;     /* Firefox 3.6 */
-  -webkit-background-clip: padding;  /* Safari 4? Chrome 6? */
-  background-clip: padding-box;      /* Firefox 4, Safari 5, Opera 10, IE 9 */
-}
-
-
-
-.apos-item
-{
-  position: relative;
-}
-
-.apos-editor2-item-buttons,
-.apos-ui-group
-{
-  width: 100%;
-  position: absolute;
-  padding: 8px;
-
-  z-index: 1;
-}
-
-.apos-editor2-hover
-{
-  background-color: fadeout(@apos-base, 50%);
-}
-
-.apos-editor2-item-separator,
-.apos-ui-item-separator
-{
-  width: 100%;
-  height: 15px;
-  padding: none;
-  border: none;
-  border: 1px dashed @apos-base;
-  // outline: 1px dashed @apos-base;
-  border-radius: 3px;
-  margin: 1px;
-}
