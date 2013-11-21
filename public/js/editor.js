@@ -150,7 +150,6 @@ function AposEditor2($el) {
     });
 
     self.dismissContextContentMenu = function() {
-      apos.log('dismiss...');
       if (self.$contextContentMenu) {
         apos.log('there is a menu...');
         // Permanent menus, like the one at the top of an area, will have
@@ -203,7 +202,11 @@ function AposEditor2($el) {
       // Don't interfere with clicks on the current editor
       return true;
     }
+
+
+
     self.doneEditingRichText(function() {
+
       self.$activeRichText = $richText;
       var id = $richText.attr('id');
       if (!id) {
@@ -213,6 +216,9 @@ function AposEditor2($el) {
       }
       $richText.attr('contenteditable', 'true');
       var toolbar = [];
+      console.log($richText)
+
+
 
       // Translate classic A2 control names to ckeditor control names.
       // You can also use native ckeditor control names. A good reference
@@ -269,6 +275,16 @@ function AposEditor2($el) {
       };
 
       var instance = instances[id] = CKEDITOR.inline(id, config);
+      var itemActions = $(instance.element.$).parent().find('.apos-item-actions');
+
+
+      instance.on('focus', function(){
+        itemActions.hide();
+      });
+
+      instance.on('blur', function(){
+        itemActions.show();
+      });
 
       // Why is this necessary? Without it we don't get focus. If we don't use a timeout
       // focus is stolen back. As it is we still lose our place in the text. ):
@@ -283,6 +299,7 @@ function AposEditor2($el) {
     if (!self.$activeRichText) {
       return callback();
     }
+
     var id = self.$activeRichText.attr('id');
     var instance = instances[id];
     var data = instance.getData();
