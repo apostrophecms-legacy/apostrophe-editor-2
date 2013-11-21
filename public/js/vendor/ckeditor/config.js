@@ -34,12 +34,12 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'paragraph',   groups: [ 'list', 'indent', 'align', 'bidi' ] },
 	];
 
-	// Remove some buttons, provided by the standard plugins, which we don't
-	// need to have in the Standard(s) toolbar.
-	config.removeButtons = 'Underline,Subscript,Superscript,Image';
+  // We config this per area
+	// config.removeButtons = '';
 
+  // We config this per area
 	// Se the most common block elements.
-	config.format_tags = 'p;h3;h4;h5;pre';
+	// config.format_tags = 'p;h3;h4;h5;pre';
 
 	// Make dialogs simpler.
 	config.removeDialogTabs = 'image:advanced;link:advanced';
