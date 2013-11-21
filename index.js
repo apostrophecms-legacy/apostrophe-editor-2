@@ -60,5 +60,23 @@ function Construct(options, callback) {
   // without waiting for an edit button to be clicked ("always editing")
   apos.alwaysEditing = 'AposEditor2';
 
+  apos.on('tasks:register', function(taskGroups) {
+    taskGroups.apostrophe.migrateToLockups = function(apos, argv, callback) {
+      return apos.forEachItem(function(page, name, area, offset, item, callback) {
+        var lockup;
+        var set = {};
+        var unset = {};
+        var key = 'areas.' + name + '.items.' + offset;
+        unset[key + '.position'] = 1;
+        unset[key + '.size'] = 1;
+        if ((item.position === 'left') || (item.position === 'right')) {
+          set[key + '.lockup'] = item.position;
+          console.log('Migrating lockup on ' + page.slug);
+        }
+        return apos.pages.update({ _id: page._id }, { $set: set, $unset: unset }, callback);
+      }, callback);
+    };
+  });
+
   return setImmediate(function() { return callback(null); });
 }
