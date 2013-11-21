@@ -66,6 +66,8 @@ Again, *if you do not enable lockups explicitly for each area, they are not perm
 
 Configuring lockups for areas in the schema of a snippet subclass works as you'd expect: just set the lockups option as you would when calling `aposArea`.
 
+"But how do I get it to float?" Actually floating and sizing things is up to you and your CSS, but lockups help you by always nesting the widget to be floated as a direct child of a div with the `apostrophe-lockup` class.
+
 ## Text-Only "Areas"
 
 `apostrophe-editor-2` allows for text-only areas. Just specify `textOnly: true` among the options you pass to `aposArea`. When you do so, there will always be just one text block, and there will be no controls to drag, reorder or delete it.
