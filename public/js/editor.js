@@ -216,7 +216,6 @@ function AposEditor2($el) {
       }
       $richText.attr('contenteditable', 'true');
       var toolbar = [];
-      console.log($richText)
 
 
 

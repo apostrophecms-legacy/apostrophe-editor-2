@@ -1,11 +1,23 @@
 @apos-base: rgb(247,160,50);
 @apos-base: #dd3226;
 
-.apos-editor2-item-buttons
+.apos-editor2-item-buttons,
+.apos-editor2-lockup-buttons
 {
   width: 100%;
   position: absolute;
   z-index: 1;
+}
+
+
+.apos-editor2-lockup-buttons
+{
+  .apos-ui-container
+  {
+    position: absolute;
+    top: -50px;
+    right: 0px;
+  }
 }
 
 .apos-editor2-item-separator
@@ -56,6 +68,21 @@
   display: inline-block;
   z-index: 801;
   .apos-editor2-temp-button;
+}
+
+.apos-ui-btn.apos-template
+{
+  display: none;
+}
+
+.apos-editor2-locked-item-buttons
+{
+  .apos-ui-container { z-index: 899; } 
+}
+
+.apos-lockup:hover
+{
+  outline: 1px dashed @apos-base;
 }
 
 
