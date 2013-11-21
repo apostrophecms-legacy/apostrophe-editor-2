@@ -2,8 +2,10 @@
 
 `apostrophe-editor-2` replaces Apostrophe's content editor with a friendlier and more reliable system that puts the design intentions of the developer first.
 
-To switch it on, just include the module in your `apostrophe-site` configuration in `app.js`:
+To switch it on, just include this module and the `apostrophe-ui-2` module in your `apostrophe-site` configuration in `app.js`:
 
+    // Must be first
+    'apostrophe-ui-2': { },
     ... other modules ...
     'apostrophe-editor-2': { },
     ... other modules ...
