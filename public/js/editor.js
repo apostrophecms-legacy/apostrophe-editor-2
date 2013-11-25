@@ -766,6 +766,10 @@ function AposEditor2($el) {
       dataType: 'html',
       success: function(html) {
         $widget.html(html);
+        var type = $widget.attr('data-type');
+        if (apos.widgetPlayers[type]) {
+          apos.widgetPlayers[type]($widget);
+        }
         self.addButtonsToWidget($widget);
       }
     });
