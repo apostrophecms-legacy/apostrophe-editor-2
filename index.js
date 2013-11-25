@@ -63,6 +63,11 @@ function Construct(options, callback) {
   // without waiting for an edit button to be clicked ("always editing")
   apos.alwaysEditing = 'AposEditor2';
 
+  // Push the knowledge that an always-on editor is in use to the browser
+  apos.pushGlobalData({
+    alwaysEditing: true
+  });
+
   apos.on('tasks:register', function(taskGroups) {
     taskGroups.apostrophe.migrateToLockups = function(apos, argv, callback) {
       return apos.forEachItem(function(page, name, area, offset, item, callback) {
