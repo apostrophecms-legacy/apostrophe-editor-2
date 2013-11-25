@@ -270,7 +270,20 @@ function AposEditor2($el) {
 
       var config = {
         toolbar: [ toolbar ],
-        stylesSet: styles
+        stylesSet: styles,
+        on: {
+          // TODO these event handlers should check whether the ckeditor instance
+          // really belongs to apostrophe and play nice if not
+          pluginsLoaded: function(evt) {
+            var cmd = evt.editor.getCommand('table');
+            // Don't allow table elements, properties and styles that
+            // complicate responsive design
+            cmd.allowedContent = 'table tr th td';
+          },
+          instanceReady: function(ck) {
+            ck.editor.removeMenuItem('tablecellproperties');
+          }
+        }
       };
 
       var instance = instances[id] = CKEDITOR.inline(id, config);
@@ -886,3 +899,6 @@ $(function() {
   // you have time to monkeypatch before it is invoked
   AposEditor2.auto();
 });
+
+
+
