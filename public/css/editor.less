@@ -1,15 +1,14 @@
 @apos-base: rgb(247,160,50);
 @apos-base: #dd3226;
 
-.apos-editor2-item-buttons,
+// .apos-editor2-item-buttons,
 .apos-editor2-lockup-buttons
+// .apos-editor2-lockup-widget-buttons
 {
   width: 100%;
   position: absolute;
   z-index: 1;
-
 }
-
 
 .apos-editor2-lockup-buttons
 {
@@ -77,7 +76,8 @@
   display: none;
 }
 
-.apos-editor2-locked-item-buttons
+.apos-editor2-locked-item-buttons,
+.apos-editor2-lockup-widget-buttons,
 {
   .apos-ui-container { z-index: 899; } 
 }
@@ -102,5 +102,15 @@
 .ui-tooltip.ui-widget-content
 {
   //hiding the default ckeditor tooltips
-  display: none !important;
+  // display: none !important;
+}
+
+
+/////////////////////////////
+/////// CKEditor
+/////////////////////////////
+
+.cke_inner
+{
+  background-color: @apos-base;
 }
