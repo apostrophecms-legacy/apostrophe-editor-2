@@ -24,10 +24,9 @@ function Construct(options, callback) {
     return apos.pushAsset(type, name, options);
   };
 
-  // This script is clever about determining its own src attribute to lazy-load
-  // more assets, so don't try to minify it as that will break relative paths
-  self.pushAsset('script', 'vendor/ckeditor/ckeditor', { when: 'user', minify: false });
-
+  // Tells ckeditor where to find the rest of itself despite minification
+  self.pushAsset('script', 'beforeCkeditor', { when: 'user' });
+  self.pushAsset('script', 'vendor/ckeditor/ckeditor', { when: 'user' });
   self.pushAsset('script', 'editor', { when: 'user' });
   self.pushAsset('stylesheet', 'editor', { when: 'user' });
   self.pushAsset('template', 'itemButtons', { when: 'user' });
