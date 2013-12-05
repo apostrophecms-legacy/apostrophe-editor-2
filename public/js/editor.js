@@ -13,6 +13,8 @@ function AposEditor2($el) {
   // CKEDITOR.inline(id) like we do. Hey, it's not our fault.
 
   CKEDITOR.disableAutoInline = true;
+  // This clears the auto-populated Title attribute CKEditor puts on stuff, makes for ugly tooltips
+  CKEDITOR.on('instanceReady',function(event){$(event.editor.element.$).attr('title','');});
 
   var self = this;
   self.$el = $el;
@@ -52,7 +54,10 @@ function AposEditor2($el) {
     });
 
     self.$el.on('click', '[data-edit-item]', function(event) {
-      var $item = $(this).closest('.apos-item');
+      var $item = $(this).closest('.apos-item, .apos-lockup');
+      if ($item.hasClass('apos-lockup')) {
+        $item = $item.find('.apos-rich-text-item');
+      }
       if ($item.attr('data-type') === 'richText') {
         var $text = $item.find('[data-rich-text]');
         self.editRichText($text);
@@ -352,12 +357,24 @@ function AposEditor2($el) {
     // Items in a lockup get a restricted set of buttons. The rich text itself still
     // has all of them
     var isLocked = self.isItemLocked($item);
-    if (self.isItemLocked($item)) {
+    if (self.isItemLocked($item) && !$item.hasClass('apos-widget')) {
       $itemButtons = apos.fromTemplate('.apos-editor2-locked-item-buttons');
+    } else if (self.isItemLocked($item)) {
+      $itemButtons = apos.fromTemplate('.apos-editor2-lockup-widget-buttons');
     } else {
       $itemButtons = apos.fromTemplate('.apos-editor2-item-buttons');
     }
+
     $item.prepend($itemButtons);
+
+    // Horizontally center a locked widget w/ unknown height
+    if ($item.find('.apos-ui-container').hasClass('center')) {
+      var buttonsWidth = $item.find('.apos-ui-container').width();
+      var widgetWidth = $item.width();
+      var left = (widgetWidth / 2) - (buttonsWidth / 2);
+      $item.find('.center').css('left', left + 'px')
+    }
+
     if (isLocked) {
       // If we let the text of a lockup be draggable and a widget is floated left
       // next to it, the widget will not be reachable by the mouse, so we don't permit
@@ -379,16 +396,26 @@ function AposEditor2($el) {
   // Add controls to a lockup, and make it draggable as appropriate
   self.addButtonsToLockup = function($lockup) {
     var $lockupButtons;
-    $lockup.find('.apos-editor2-lockup-buttons:not(.apos-template)').remove();
-    $lockupButtons = apos.fromTemplate('.apos-editor2-lockup-buttons');
+    $lockup.find('.apos-editor2-locked-item-buttons:not(.apos-template)').remove();
+    $lockupButtons = apos.fromTemplate('.apos-editor2-locked-item-buttons');
+    // $lockupButtons = apos.fromTemplate('.apos-editor2-lockup-buttons');
 
     var $typeTemplate = $lockupButtons.find('[data-lockup-type]');
     var lockups = self.getLockupsForArea($lockup.closest('.apos-area'));
     var $previous = $typeTemplate;
     _.each(lockups, function(lockup, name) {
       var $button = apos.fromTemplate($typeTemplate);
-      $button.text(lockup.label);
-      // This would be a good place to add the icon instead
+      if (lockup.tooltip) {
+        $button.attr('title', lockup.tooltip);
+      } else {
+        $button.attr('title', lockup.label);
+      }
+      if (lockup.icon) {
+        $button.find('i').attr('class', lockup.icon);
+      } else {
+        $button.text(lockup.label);
+      }
+      
       $button.attr('data-lockup-type', name);
       $previous.after($button);
     });
@@ -902,6 +929,7 @@ $(function() {
   // Note we do this at DOMready, so if you want to hack it for some reason,
   // you have time to monkeypatch before it is invoked
   AposEditor2.auto();
+
 });
 
 

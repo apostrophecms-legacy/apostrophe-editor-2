@@ -31,7 +31,7 @@ function Construct(options, callback) {
   self.pushAsset('stylesheet', 'editor', { when: 'user' });
   self.pushAsset('template', 'itemButtons', { when: 'user' });
   self.pushAsset('template', 'lockedItemButtons', { when: 'user' });
-  self.pushAsset('template', 'lockupButtons', { when: 'user' });
+  self.pushAsset('template', 'lockedWidgetButtons', { when: 'user' });
   self.pushAsset('template', 'richText', { when: 'user' });
   self.pushAsset('template', 'itemSeparator', { when: 'user' });
 
