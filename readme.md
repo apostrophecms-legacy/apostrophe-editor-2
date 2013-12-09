@@ -32,7 +32,8 @@ Here's how you define lockups:
     lockups: {
       left: {
         label: 'Left',
-        icon: 'left',
+        icon: 'icon-arrow-left',
+        tooltip: 'Float Left',
         // Only allows one type of widget
         widgets: [ 'slideshow' ],
         // Override the options for slideshows when they are inside the lockup to get the size right
@@ -42,7 +43,8 @@ Here's how you define lockups:
       },
       right: {
         label: 'Right',
-        icon: 'right',
+        icon: 'icon-arrow-right',
+        tooltip: 'Float Right',
         // Allows two types of widget
         widgets: [ 'slideshow', 'video' ],
         slideshow: {
