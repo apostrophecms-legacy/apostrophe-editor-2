@@ -156,14 +156,11 @@ function AposEditor2($el) {
 
     self.dismissContextContentMenu = function() {
       if (self.$contextContentMenu) {
-        apos.log('there is a menu...');
         // Permanent menus, like the one at the top of an area, will have
         // a data-content-menu-toggle element for showing and hiding their
         // options. These should be hidden when not needed. Other menus
         // were produced by clicking "add" and can be removed when not needed.
         if (self.$contextContentMenu.has('[data-content-menu-toggle]').length) {
-          apos.log(self.$contextContentMenu[0]);
-          apos.log('hiding...');
           self.$contextContentMenu.find('[data-content-menu-options]').hide();
         } else {
           self.$contextContentMenu.remove();
@@ -757,7 +754,6 @@ function AposEditor2($el) {
         return;
       }
     }
-    apos.log('unlocking');
     var $items = $lockup.children('.apos-item');
     $items.each(function() {
       var $item = $(this);
@@ -881,7 +877,6 @@ function AposEditor2($el) {
     }
     var data = self.serialize();
     if (JSON.stringify(data) !== JSON.stringify(self.previousData)) {
-      apos.log('saving...');
       $.ajax({
         url: '/apos/edit-area',
         type: 'POST',
@@ -893,7 +888,6 @@ function AposEditor2($el) {
         async: !sync,
         success: function() {
           self.previousData = data;
-          apos.log('saved');
         },
         error: function() {
           apos.log('save FAILED');
