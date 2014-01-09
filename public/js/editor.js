@@ -18,6 +18,10 @@ function AposEditor2($el) {
 
   var self = this;
   self.$el = $el;
+
+  // So we don't reinitialize it on every call to enableAll()
+  self.$el.attr('data-initialized', 'true');
+
   // So serialize can be invoked from the outside world
   self.$el.data('editor', self);
   self.options = JSON.parse(self.$el.attr('data-options'));
@@ -175,9 +179,9 @@ function AposEditor2($el) {
     } else {
       addButtons();
     }
+
     function addButtons() {
       self.addButtonsToExistingItems();
-      self.$el.attr('data-initialized', 'true');
     }
 
     if (self.$el.is('[data-save]')) {
