@@ -469,20 +469,26 @@ function AposEditor2($el) {
   // to the element being dragged.
   self.addSeparators = function($draggable) {
     var $areas = self.getDroppableAreas($draggable);
+    console.log($areas);
 
     // Drop zone at the top of every area, unless we are dragging the top item
     // in that particular area
+    
+
     $areas.each(function() {
       var $area = $(this);
       var $ancestor = $draggable.closest('.apos-area[data-editable]');
       $area.addClass('apos-dragging');
+      
       if (($area[0] === $ancestor[0]) && (!$draggable.prev().length)) {
         return;
       }
+
       $area.find('.apos-normal-view .apos-content:first').prepend(self.newSeparator());
     });
 
     var $elements = $areas.find(selItems + ',' + selLockups);
+    $(window).trigger('apos-dragging', [$elements]);
     // Counter so we can peek ahead
     var i = 0;
     $elements.each(function() {
@@ -497,6 +503,7 @@ function AposEditor2($el) {
         good = false;
       }
       if (good) {
+        console.log('woof')
         $element.after(self.newSeparator());
       }
       i++;
@@ -505,6 +512,7 @@ function AposEditor2($el) {
   };
 
   self.removeSeparators = function() {
+    $(window).trigger('apos-stop-dragging');
     $('.apos-area').removeClass('apos-dragging');
     $('[data-drag-item-separator]:not(.apos-template)').remove();
   };
