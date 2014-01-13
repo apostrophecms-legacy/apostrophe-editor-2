@@ -68,7 +68,17 @@ Again, *if you do not enable lockups explicitly for each area, they are not perm
 
 Configuring lockups for areas in the schema of a snippet subclass works as you'd expect: just set the lockups option as you would when calling `aposArea`.
 
-"But how do I get it to float?" Actually floating and sizing things is up to you and your CSS, but lockups help you by always nesting the widget to be floated as a direct child of a div with the `apostrophe-lockup` class.
+**"But how do I get it to float?"** Apostrophe guarantees that the widget and the text it's been locked to will be wrapped in a div with the `apostrophe-lockup` class, and also a CSS class with the same name as the lockup. So if your lockup is named `left`, you can count on the classes `apostrophe-lockup` and `left` existing on that div. From there you should have no trouble targeting the widget, for instance:
+
+
+```css
+.apostrophe-lockup.left .apos-widget {
+  float: left;
+  width: 300px;
+}
+```
+
+Actually floating and sizing things is up to you and your CSS, but lockups help you by always nesting the widget to be floated as a direct child of a div with the `apostrophe-lockup` class.
 
 ## Text-Only "Areas"
 
