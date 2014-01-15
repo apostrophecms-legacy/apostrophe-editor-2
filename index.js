@@ -42,7 +42,7 @@ function Construct(options, callback) {
   app.post('/apos-editor-2/content-menu', function(req, res) {
     var controls;
     if (req.body.controls) {
-      controls = apos.sanitizeTags(req.body.controls);
+      controls = apos.sanitizeStrings(req.body.controls);
     } else {
       // So we don't inadvertently modify the original
       controls = clone(apos.defaultControls);
