@@ -105,7 +105,31 @@ function AposEditor2($el) {
       return false;
     });
 
-    self.$el.on('click', '[data-rich-text]:not(.apos-widget [data-rich-text])', function() {
+    self.$el.on('click', '[data-rich-text]:not(.apos-widget [data-rich-text])', function(event) {
+      // Don't mess with links in the rich text, even editors need to be able to
+      // follow links sometimes. They can use the pencil if the entire text
+      // is a link
+      var $richText = $(this);
+      var $link = $(event.target).closest('a');
+      if ($link.length) {
+        var state = $richText.data('aposState');
+        if (!state) {
+          // Block the Apostrophe click-to-edit behavior, let the link work normally
+          return true;
+        }
+        if (state === 'focused') {
+          // There is already a focused ckeditor instance, so let it
+          // handle the click
+          return true;
+        }
+        if (state === 'blurred') {
+          // There is an unfocused ckeditor instance, aggressively
+          // force the link to work instead of the ckeditor click-to-edit behavior
+          window.location.href = $link.attr('href');
+          return false;
+        }
+      }
+      // Not a link, not already an editor instance, start the editor
       return self.editRichText($(this));
     });
 
@@ -209,8 +233,6 @@ function AposEditor2($el) {
       return true;
     }
 
-
-
     self.doneEditingRichText(function() {
 
       self.$activeRichText = $richText;
@@ -298,10 +320,14 @@ function AposEditor2($el) {
 
       instance.on('focus', function(){
         itemActions.hide();
+        $richText.data('aposState', 'focused');
       });
 
       instance.on('blur', function(){
         itemActions.show();
+        // On blur kill the editor so we can click on links in the text again
+        self.doneEditingRichText(function() {});
+        $richText.data('aposState', 'blurred');
       });
 
       // Why is this necessary? Without it we don't get focus. If we don't use a timeout
@@ -309,6 +335,7 @@ function AposEditor2($el) {
       setTimeout(function() {
         instance.focus();
       }, 100);
+
     });
     return false;
   };
@@ -325,6 +352,7 @@ function AposEditor2($el) {
     delete instances[id];
     self.$activeRichText.removeAttr('contenteditable');
     self.$activeRichText.html(data);
+    self.$activeRichText.data('aposState', undefined);
     self.$activeRichText = undefined;
     return callback();
   };
