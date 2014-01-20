@@ -497,7 +497,6 @@ function AposEditor2($el) {
   // to the element being dragged.
   self.addSeparators = function($draggable) {
     var $areas = self.getDroppableAreas($draggable);
-    console.log($areas);
 
     // Drop zone at the top of every area, unless we are dragging the top item
     // in that particular area
@@ -531,7 +530,6 @@ function AposEditor2($el) {
         good = false;
       }
       if (good) {
-        console.log('woof')
         $element.after(self.newSeparator());
       }
       i++;
