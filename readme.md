@@ -16,6 +16,10 @@ To switch it on for an existing project, just include this module and the `apost
 
 You can use `apostrophe-editor-2` as a drop-in replacement for the built-in editor. You can also specify CKEditor-specific menu items in your `controls` option.
 
+### Code Stability
+
+0.4.x releases receive bug fixes only. For active development, follow 0.5.x releases and/or the master branch in github.
+
 ## Float Content Sanely With Lockups
 
 `apostrophe-editor-2` supports lockups. A lockup is a marriage between one rich text item and one widget, such as a slideshow.
