@@ -13,16 +13,8 @@ function Construct(options, callback) {
   var app = options.app;
 
   var self = this;
-  // TODO: refactor the .modules stuff from snippets/index.js so we can do easy
-  // overrides of templates here and in any module, don't keep copying all that code
 
-  self.pushAsset = function(type, name, optionsArg) {
-    var options = {};
-    extend(true, options, optionsArg);
-    options.fs = __dirname;
-    options.web = '/apos-editor-2';
-    return apos.pushAsset(type, name, options);
-  };
+  apos.mixinModuleAssets(self, 'apostrophe-editor-2', __dirname, options);
 
   // Tells ckeditor where to find the rest of itself despite minification
   self.pushAsset('script', 'beforeCkeditor', { when: 'user' });
