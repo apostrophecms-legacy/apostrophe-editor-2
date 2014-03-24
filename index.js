@@ -46,16 +46,6 @@ function Construct(options, callback) {
     return res.send(self.render('contentMenu', { controls: controls, itemTypes: apos.itemTypes, richText: richText, addLabel: req.body.addLabel }));
   });
 
-  // Constructor name for our client side object that edits areas and should be
-  // instantiated whenever an area the user has permission to output is present
-  // without waiting for an edit button to be clicked ("always editing")
-  apos.alwaysEditing = 'AposEditor2';
-
-  // Push the knowledge that an always-on editor is in use to the browser
-  apos.pushGlobalData({
-    alwaysEditing: true
-  });
-
   apos.on('tasks:register', function(taskGroups) {
     taskGroups.apostrophe.migrateToLockups = function(apos, argv, callback) {
       return apos.forEachItem(function(page, name, area, offset, item, callback) {
