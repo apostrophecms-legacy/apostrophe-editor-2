@@ -14,7 +14,7 @@ function Construct(options, callback) {
 
   var self = this;
 
-  apos.mixinModuleAssets(self, 'apostrophe-editor-2', __dirname, options);
+  apos.mixinModuleAssets(self, 'editor-2', __dirname, options);
 
   // Tells ckeditor where to find the rest of itself despite minification
   self.pushAsset('script', 'beforeCkeditor', { when: 'user' });
@@ -45,9 +45,6 @@ function Construct(options, callback) {
     }
     return res.send(self.render('contentMenu', { controls: controls, itemTypes: apos.itemTypes, richText: richText, addLabel: req.body.addLabel }));
   });
-
-  // Serve our assets
-  app.get('/apos-editor-2/*', apos.static(__dirname + '/public'));
 
   // Constructor name for our client side object that edits areas and should be
   // instantiated whenever an area the user has permission to output is present
