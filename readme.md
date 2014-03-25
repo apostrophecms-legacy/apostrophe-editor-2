@@ -80,6 +80,30 @@ Configuring lockups for areas in the schema of a snippet subclass works as you'd
 
 Actually floating and sizing things is up to you and your CSS, but lockups help you by always nesting the widget to be floated as a direct child of a div with the `apostrophe-lockup` class.
 
+## Adding tags with custom attributes to the Styles menu
+You can pass custom attributes (like classes) to tags in the Styles menu of CKEditor by adding the element to the styles array of an area:
+
+    {{
+        aposArea(page, 'content', {
+          styles: [ 
+            { value: 'h5', label: 'Heading 5' },
+            { value: 'div', label: 'Centered', attributes: {class: 'centered' } }
+          ] 
+      })
+    }}
+
+After which you must make the proper exception in apostrophe-site's SanitizeHtml in app.js (add it if you don't have it)
+
+    var site = require('apostrophe-site')({
+      sanitizeHtml: {
+        allowedAttributes: {
+            a: [ 'href', 'name', 'target' ],
+            img: [ 'src' ],
+            div: [ 'class' ]
+        },
+      },
+    })
+
 ## Text-Only "Areas"
 
 `apostrophe-editor-2` allows for text-only areas. Just specify `textOnly: true` among the options you pass to `aposArea`. When you do so, there will always be just one text block, and there will be no controls to drag, reorder or delete it.
