@@ -271,7 +271,12 @@ function AposEditor2($el) {
       var styles = _.map(self.options.styles, function(style) {
         return {
           name: style.name || style.label,
-          element: style.element || style.value
+          element: style.element || style.value,
+          // This will not work the way you expect unless you allow
+          // the relevant attributes in your sanitizeHtml configuration
+          // in app.js
+          styles: style.styles,
+          attributes: style.attributes
         };
       });
 
