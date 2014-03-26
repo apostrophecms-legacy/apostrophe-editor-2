@@ -37,7 +37,11 @@ function AposEditor2($el) {
   var selLockups = '.apos-lockup:not(.apos-widget .apos-lockup)';
 
   self.init = function() {
+    if (self.$el.find('.apos-content').html() === "") {
+      self.$el.find('.apos-content').addClass('apos-empty');
+    }
     self.$el.on('click', '[data-add-item-type]', function() {
+      self.$el.find('.apos-content').removeClass('apos-empty');
       var itemType = $(this).attr('data-add-item-type');
 
       // If this is not empty then we want to append the new item after this item.
@@ -333,11 +337,23 @@ function AposEditor2($el) {
         // On blur kill the editor so we can click on links in the text again
         self.doneEditingRichText(function() {});
         $richText.data('aposState', 'blurred');
+        // stuart
+        var html = $richText.html();
+        if (html.length !== 0) {
+          $richText.parents('[data-type="richText"]').removeClass('apos-empty');
+        }
       });
 
       // Why is this necessary? Without it we don't get focus. If we don't use a timeout
       // focus is stolen back. As it is we still lose our place in the text. ):
       setTimeout(function() {
+        // This should not be necessary, but without the &nbsp; we are unable to
+        // focus on an "empty" rich text after first clicking away an then clicking back.
+        // And without the call to focus() people have to double click for no
+        // apparent reason
+        if ($richText.html() === "" || $richText.html() === ' ') {
+          $richText.html('<div>&nbsp;</div>');
+        }
         instance.focus();
       }, 100);
 
@@ -636,6 +652,16 @@ function AposEditor2($el) {
     return false;
   };
 
+  self.checkEmptyAreas = function() {
+    $('.apos-area[data-editable]').each(function() {
+      var $el = $(this);
+      if ($el.find('[data-type]').length === 0) {
+        $el.find('.apos-content').addClass('apos-empty');
+      }
+    });
+    return false;
+  }
+
   self.addWidget = function(type) {
     self.doneEditingRichText(function() {
       var options = self.options[type] || {};
@@ -650,6 +676,7 @@ function AposEditor2($el) {
       self.unlock($item);
       $item.remove();
     });
+    self.checkEmptyAreas();
     return false;
   };
 
@@ -937,6 +964,7 @@ function AposEditor2($el) {
         }
       });
     }
+    self.checkEmptyAreas();
   };
 }
 
@@ -968,6 +996,7 @@ $(function() {
   AposEditor2.auto();
 
 });
+
 
 
 
