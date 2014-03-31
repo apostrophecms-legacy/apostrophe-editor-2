@@ -23,7 +23,7 @@
   "license": "MIT",
   "dependencies": {
     "extend": "~1.2.1",
-    "underscore": "~1.5.2",
+    "lodash": "2.4.x",
     "clone": "~0.1.11"
   }
 }

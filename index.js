@@ -1,5 +1,5 @@
 var extend = require('extend');
-var _ = require('underscore');
+var _ = require('lodash');
 var clone = require('clone');
 
 module.exports = function(options, callback) {
