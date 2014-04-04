@@ -81,6 +81,34 @@
 {
   .apos-ui-container { z-index: 899; } 
 }
+.apos-editor2-locked-item-buttons .apos-ui-dropdown
+{
+  .apos-ui-menu
+  {
+    right: 0;
+    &:before
+    {
+      left: auto;
+      right: 12px;
+    }
+  }
+  .apos-ui-menu-item
+  {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-family: Cabin;
+
+    i {font-size:11px; margin-right: 5px;}
+  }
+}
+.apos-ui-menu
+{
+  &.apos-active
+  {
+    display: block;
+  }
+}
 .apos-lockup > .apos-widget
 {
   position: relative;

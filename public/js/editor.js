@@ -452,6 +452,9 @@ function AposEditor2($el) {
 
     var $typeTemplate = $lockupButtons.find('[data-lockup-type]');
     var lockups = self.getLockupsForArea($lockup.closest('.apos-area'));
+    if (lockups) {
+      $lockup.closest('.apos-area').find('[data-lockups-menu]').removeClass('apos-template');
+    }
     var $previous = $typeTemplate;
     _.each(lockups, function(lockup, name) {
       var $button = apos.fromTemplate($typeTemplate);
@@ -462,18 +465,23 @@ function AposEditor2($el) {
       }
       if (lockup.icon) {
         $button.find('i').attr('class', lockup.icon);
-      } else {
-        $button.text(lockup.label);
       }
+      
+      $button.append(lockup.label);
       
       $button.attr('data-lockup-type', name);
       $previous.after($button);
     });
+    $typeTemplate.remove();
 
     var type = self.getLockupType($lockup);
     $lockupButtons.find('[data-lockup-type="' + type + '"]').addClass('apos-active');
 
     $lockup.prepend($lockupButtons);
+
+    $lockup.find('[data-content-menu-toggle]').click(function(e) {
+      $(this).next().toggleClass('apos-active');
+    });
     $lockup.draggable(self.draggableSettings);
   };
 
