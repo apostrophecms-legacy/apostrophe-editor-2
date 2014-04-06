@@ -80,6 +80,58 @@ function AposEditor2($el) {
       }
     });
 
+
+    self.$el.on('click', '[data-move-item]', function(e) {
+      var $self = $(this);
+      var $item = $self.closest('.apos-item, .apos-lockup');
+      var direction = $self.attr('data-move-item');
+  
+      if (direction === 'up') {
+        $item.prev().before($item);
+      } else if (direction === 'down') {
+        $item.next().after($item);
+      } else if (direction === 'top') {
+        $item.parent().children(':first').before($item);
+      } else if (direction === 'bottom') {
+        $item.parent().children(':last').after($item);
+      }
+    });
+
+    // listen for editor modifier keys
+    var modifierOn = false;
+    $('body').on('keydown', function(e) {
+      if (e.keyCode === 16) {
+        $('[data-move-item]').each(function() {
+          $self = $(this);
+          if ($self.attr('data-move-item') === 'up') {
+            $self.children('i').toggleClass('icon-double-angle-up');
+            $self.attr('data-move-item', 'top');
+          } else if ($self.attr('data-move-item') === 'down') {
+            $self.children('i').toggleClass('icon-double-angle-down');
+            $self.attr('data-move-item', 'bottom');
+          }
+          modifierOn = true;
+        });
+      }
+    });
+
+    $('body').on('keyup', function(e) {
+      if (modifierOn === true) {
+        $('[data-move-item]').each(function() {
+          $self = $(this);
+          $self.children('i').removeClass('icon-double-angle-up');
+          $self.children('i').removeClass('icon-double-angle-down');
+          if ($self.attr('data-move-item') === 'top') {
+            $self.attr('data-move-item', 'up');
+          } else if ($self.attr('data-move-item') === 'bottom') {
+            $self.attr('data-move-item', 'down');
+          }
+          modifierOn = false;
+        });
+      }
+    });
+
+
     // Switch a lockup between types (left, right, etc)
     self.$el.on('click', '[data-lockup-type]', function(event) {
       var type = $(this).attr('data-lockup-type');
