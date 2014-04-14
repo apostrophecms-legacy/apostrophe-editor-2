@@ -85,7 +85,7 @@ function AposEditor2($el) {
       var $self = $(this);
       var $item = $self.closest('.apos-item, .apos-lockup');
       var direction = $self.attr('data-move-item');
-  
+
       if (direction === 'up') {
         $item.prev().before($item);
       } else if (direction === 'down') {
@@ -196,12 +196,19 @@ function AposEditor2($el) {
 
     self.$el.on('click', '[data-content-menu-toggle]', function() {
       var $contentMenu = $(this).closest('[data-content-menu]');
-      if (self.$contextContentMenu && (self.$contextContentMenu[0] !== $contentMenu[0])) {
-        self.dismissContextContentMenu();
+      if ($contentMenu.hasClass('apos-open')) {
+        $contentMenu.removeClass('apos-open');
+        delete self.$contextContentMenu;
+        return;
       }
-      $contentMenu.find('[data-content-menu-options]').toggle();
+      $('body').trigger('aposCloseContentMenus');
+      $contentMenu.addClass('apos-open');
       self.$contextContentMenu = $contentMenu;
       return false;
+    });
+
+    $('body').on('aposCloseContentMenus', function() {
+      self.dismissContextContentMenu();
     });
 
     self.$el.on('click', '[data-add-item]', function() {
@@ -245,8 +252,9 @@ function AposEditor2($el) {
         // options. These should be hidden when not needed. Other menus
         // were produced by clicking "add" and can be removed when not needed.
         if (self.$contextContentMenu.has('[data-content-menu-toggle]').length) {
-          self.$contextContentMenu.find('[data-content-menu-options]').hide();
+          self.$contextContentMenu.toggleClass('apos-open', false);
         } else {
+          //self.$contextContentMenu.toggleClass('apos-open', false);
           self.$contextContentMenu.remove();
           delete self.$contextContentMenu;
         }
@@ -518,9 +526,9 @@ function AposEditor2($el) {
       if (lockup.icon) {
         $button.find('i').attr('class', lockup.icon);
       }
-      
+
       $button.append(lockup.label);
-      
+
       $button.attr('data-lockup-type', name);
       $previous.after($button);
     });
@@ -581,13 +589,13 @@ function AposEditor2($el) {
 
     // Drop zone at the top of every area, unless we are dragging the top item
     // in that particular area
-    
+
 
     $areas.each(function() {
       var $area = $(this);
       var $ancestor = $draggable.closest('.apos-area[data-editable]');
       $area.addClass('apos-dragging');
-      
+
       if (($area[0] === $ancestor[0]) && (!$draggable.prev().length)) {
         return;
       }
@@ -1056,7 +1064,3 @@ $(function() {
   AposEditor2.auto();
 
 });
-
-
-
-
