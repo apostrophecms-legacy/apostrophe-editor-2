@@ -1,6 +1,6 @@
 {
   "name": "apostrophe-editor-2",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "A new content area editor for Apostrophe. Integrates ckeditor and allows the option of using other rich text editors. Alternative content area editors can also be created following the same interface.",
   "main": "index.js",
   "scripts": {
