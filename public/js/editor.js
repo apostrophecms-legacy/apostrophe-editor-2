@@ -201,13 +201,13 @@ function AposEditor2($el) {
         delete self.$contextContentMenu;
         return;
       }
-      $('body').trigger('aposCloseContentMenus');
+      $('body').trigger('aposCloseMenus');
       $contentMenu.addClass('apos-open');
       self.$contextContentMenu = $contentMenu;
       return false;
     });
 
-    $('body').on('aposCloseContentMenus', function() {
+    $('body').on('aposCloseMenus', function() {
       self.dismissContextContentMenu();
     });
 
