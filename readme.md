@@ -85,10 +85,10 @@ You can pass custom attributes (like classes) to tags in the Styles menu of CKEd
 
     {{
         aposArea(page, 'content', {
-          styles: [ 
+          styles: [
             { value: 'h5', label: 'Heading 5' },
             { value: 'div', label: 'Centered', attributes: {class: 'centered' } }
-          ] 
+          ]
       })
     }}
 
@@ -110,3 +110,17 @@ After which you must make the proper exception in apostrophe-site's SanitizeHtml
 
 (TODO: make it possible to call `aposSingleton` with a type of `richText`. For now, use the `textOnly` option.)
 
+## CKEditor Plugins
+
+CKEditor has nice support for [Widgets](http://docs.ckeditor.com/#!/guide/widget_sdk_intro). You can create own CKEditor
+plugins or widgets which can be then loaded to `aposArea()` thought `plugins` option:
+
+    {{
+        aposArea(page, 'content', {
+          plugins: [
+            { name: 'headline', path: '/editor/plugins/headline/' }
+          ]
+      })
+    }}
+
+This will load file `/public/editor/plugins/headline/plugin.js`.

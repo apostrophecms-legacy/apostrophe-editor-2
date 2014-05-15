@@ -5,42 +5,39 @@
 
 CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here.
-	// For the complete reference:
+	// For complete reference see:
 	// http://docs.ckeditor.com/#!/api/CKEDITOR.config
 
-	// The toolbar groups arrangement, optimized for two toolbar rows.
+	// The toolbar groups arrangement, optimized for a single toolbar row.
 	// config.toolbarGroups = [
-	// 	{ name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
-	// 	{ name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
-	// 	{ name: 'links' },
-	// 	{ name: 'insert' },
-	// 	{ name: 'forms' },
-	// 	{ name: 'tools' },
-	// 	{ name: 'document',	   groups: [ 'mode', 'document', 'doctools' ] },
-	// 	{ name: 'others' },
-	// 	'/',
-	// 	{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
-	// 	{ name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
-	// 	{ name: 'styles' },
-	// 	{ name: 'colors' },
-	// 	{ name: 'about' }
-	// ];
-
+	//	{ name: 'document',	   groups: [ 'mode', 'document', 'doctools' ] },
+	//	{ name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
+	//	{ name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
+	//	{ name: 'forms' },
+	//	{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+	//	{ name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
+	//	{ name: 'links' },
+	//	{ name: 'insert' },
+	//	{ name: 'styles' },
+	//	{ name: 'colors' },
+	//	{ name: 'tools' },
+	//	{ name: 'others' },
+	//	{ name: 'about' }
+	//];
 
 	config.toolbarGroups = [
 		{ name: 'styles' },
 		{ name: 'basicstyles', groups: [ 'basicstyles' ] },
 		{ name: 'links' },
-		{ name: 'paragraph',   groups: [ 'list', 'indent', 'align', 'bidi' ] },
+		{ name: 'paragraph', groups: [ 'list', 'indent', 'align', 'bidi' ] },
+		{ name: 'insert' }
 	];
 
-  // We config this per area
-	// config.removeButtons = '';
+	// The default plugins included in the basic setup define some buttons that
+	// are not needed in a basic editor. They are removed here.
+	// We config this per area
+	// config.removeButtons = 'Cut,Copy,Paste,Undo,Redo,Anchor,Underline,Strike,Subscript,Superscript';
 
-  // We config this per area
-	// Se the most common block elements.
-	// config.format_tags = 'p;h3;h4;h5;pre';
-
-	// Make dialogs simpler.
+	// Dialog windows are also simplified.
 	config.removeDialogTabs = 'image:advanced;link:advanced';
 };
