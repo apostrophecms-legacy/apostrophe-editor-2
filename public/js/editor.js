@@ -365,9 +365,22 @@ function AposEditor2($el) {
         }
       });
 
+      // This will allow loading of extra plugins for each editor
+      // For example if you need to write a CKEditor widget http://docs.ckeditor.com/#!/guide/widget_sdk_tutorial_1
+      var extraPlugins = [];
+      _.each(self.options.plugins, function(widget) {
+        var plugin = CKEDITOR.plugins.get(widget.name);
+        if (!plugin) {
+          CKEDITOR.plugins.addExternal(widget.name, widget.path);
+        }
+        extraPlugins.push(widget.name);
+      });
+      extraPlugins = extraPlugins.join(',');
+
       var config = {
         toolbar: [ toolbar ],
         stylesSet: styles,
+        extraPlugins: extraPlugins,
         on: {
           // TODO these event handlers should check whether the ckeditor instance
           // really belongs to apostrophe and play nice if not
