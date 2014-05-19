@@ -52,14 +52,25 @@ function Construct(options, callback) {
         var lockup;
         var set = {};
         var unset = {};
+        var setUnset = {};
         var key = 'areas.' + name + '.items.' + offset;
         unset[key + '.position'] = 1;
         unset[key + '.size'] = 1;
+        if (unset) {
+          setUnset.$unset = unset;
+        }
         if ((item.position === 'left') || (item.position === 'right')) {
           set[key + '.lockup'] = item.position;
           console.log('Migrating lockup on ' + page.slug);
+          setUnset.$set = set;
         }
-        return apos.pages.update({ _id: page._id }, { $set: set, $unset: unset }, callback);
+
+        if (setUnset.$set || setUnset.$unset) {
+          return apos.pages.update({ _id: page._id }, setUnset, callback);
+        } else {
+          return callback(null);
+        }
+        
       }, callback);
     };
   });
