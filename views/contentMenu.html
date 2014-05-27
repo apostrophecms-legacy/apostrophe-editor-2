@@ -1,7 +1,7 @@
 <ul data-content-menu class="apos-ui-container apos-ui apos-ui-dropdown">
   {# js will strip out the toggle span when the "add" button is being used. #}
   {# When the menu is at the top of an area the toggle span does appear. #}
-  <li><span class="apos-ui-btn" data-content-menu-toggle><i class="icon-plus"></i> {% if addLabel %}{{ __(addLabel) | e }}{% else %}{{ __('Add Content') }}{%endif %}  </span>
+  <li><span class="apos-ui-btn apos-content-menu-toggle" data-content-menu-toggle><i class="icon-plus"></i> {% if addLabel %}{{ __(addLabel) | e }}{% else %}{{ __('Add Content') }}{%endif %}  </span>
     <ul class="apos-editor2-content-menu-options apos-ui-menu" data-content-menu-options>
       {% for control in controls %}
         {# Bold, italic, etc. are not item types, here we pay attention only to controls that are #}

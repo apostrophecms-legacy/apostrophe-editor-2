@@ -192,6 +192,10 @@ function AposEditor2($el) {
     });
 
     self.$el.on('click', '[data-content-menu-toggle]', function() {
+      if ($(this).hasClass('apos-disabled')) {
+        // Limit reached
+        return false;
+      }
       var $contentMenu = $(this).closest('[data-content-menu]');
       if ($contentMenu.hasClass('apos-open')) {
         $contentMenu.removeClass('apos-open');
@@ -258,6 +262,8 @@ function AposEditor2($el) {
       }
     };
 
+    self.linkItemsToAreaEditor();
+
     // Should we bring async into browserland? This would be more elegant if we did
     if (!self.options.textOnly) {
       self.addTopContentMenu(addButtons);
@@ -267,6 +273,7 @@ function AposEditor2($el) {
 
     function addButtons() {
       self.addButtonsToExistingItems();
+      self.respectLimit();
     }
 
     if (self.$el.is('[data-save]')) {
@@ -286,6 +293,16 @@ function AposEditor2($el) {
     if (self.options.textOnly && (!self.$el.find(selItems).length)) {
       return self.addRichText();
     }
+  };
+
+  self.linkItemsToAreaEditor = function() {
+    // Every item should know its area editor so we can talk
+    // to other area editors after drag-and-drop
+    var $items = self.$el.find(selItems);
+    $items.each(function() {
+      var $item = $(this);
+      $item.data('areaEditor', self);
+    });
   };
 
   self.editRichText = function($richText) {
@@ -479,7 +496,7 @@ function AposEditor2($el) {
       var buttonsWidth = $item.find('.apos-ui-container').width();
       var widgetWidth = $item.width();
       var left = (widgetWidth / 2) - (buttonsWidth / 2);
-      $item.find('.center').css('left', left + 'px')
+      $item.find('.center').css('left', left + 'px');
     }
 
     if (isLocked) {
@@ -569,9 +586,11 @@ function AposEditor2($el) {
   self.insertWidget = function($widget) {
     $widget.addClass('apos-item');
     self.insertItem($widget);
+    self.respectLimit();
   };
 
   self.insertItem = function($item) {
+    $item.data('areaEditor', self);
     if (self.$insertItemContext && self.$insertItemContext.length) {
       self.$insertItemContext.after($item);
     } else {
@@ -634,7 +653,12 @@ function AposEditor2($el) {
 
     var $areas;
     if (betweenAreas) {
-      $areas = $('.apos-area[data-editable]:not([data-text-only])');
+      // Only the current area, and areas that are not full
+      $areas = $('.apos-area[data-editable]:not([data-text-only])').filter(function() {
+        var editor = $(this).data('editor');
+        return ((!editor.limitReached()) || ($draggable.data('areaEditor') === editor));
+        }
+      );
     } else {
       $areas = $draggable.closest('.apos-area[data-editable]');
     }
@@ -713,6 +737,7 @@ function AposEditor2($el) {
       self.addButtonsToItem($text);
       self.insertItem($text);
       self.editRichText($text.find('[data-rich-text]'));
+      self.respectLimit();
     });
     return false;
   };
@@ -725,7 +750,7 @@ function AposEditor2($el) {
       }
     });
     return false;
-  }
+  };
 
   self.addWidget = function(type) {
     self.doneEditingRichText(function() {
@@ -740,8 +765,9 @@ function AposEditor2($el) {
     self.doneEditingRichText(function() {
       self.unlock($item);
       $item.remove();
+      self.checkEmptyAreas();
+      self.respectLimit();
     });
-    self.checkEmptyAreas();
     return false;
   };
 
@@ -752,9 +778,10 @@ function AposEditor2($el) {
     tolerance: 'pointer',
     start: function(event, ui) {
       self.doneEditingRichText(function() {
-        // Can't drag before or after itself
-        // apos.log('start');
-        self.enableDroppables($(event.target));
+        // If the limit has been reached, we can only accept
+        // drags from the same area
+        var $item = $(event.target);
+        self.enableDroppables($item);
       });
     },
     stop: function(event, ui) {
@@ -797,6 +824,7 @@ function AposEditor2($el) {
       if ($item.hasClass('apos-widget')) {
         self.reRenderWidget($item);
       }
+      self.changeOwners($item);
     }
   };
 
@@ -856,6 +884,7 @@ function AposEditor2($el) {
         $(ui.draggable).remove();
       }
       self.disableDroppables();
+      self.changeOwners($item);
     }
   };
 
@@ -906,6 +935,11 @@ function AposEditor2($el) {
     $items.each(function() {
       self.addButtonsToItem($(this));
     });
+    // Actually, we may already be over the limit at this point,
+    // but we give the user until they leave the page to do
+    // something about that (TODO: a visual indication that their
+    // content is in peril would be best).
+    self.respectLimit();
   };
 
   // Get the server to re-render a widget for us, applying the
@@ -1030,6 +1064,29 @@ function AposEditor2($el) {
       });
     }
     self.checkEmptyAreas();
+  };
+
+  // Take an item that might belong to a different
+  // area and make it ours
+  self.changeOwners = function($item) {
+    $item.data('areaEditor').respectLimit();
+    $item.data('areaEditor', self);
+    self.respectLimit();
+  };
+
+  self.respectLimit = function() {
+    var count = self.$el.find(selItems).length;
+    var $toggles = self.$el.find('[data-content-menu-toggle]');
+    if (self.limitReached()) {
+      $toggles.addClass('apos-disabled');
+    } else {
+      $toggles.removeClass('apos-disabled');
+    }
+  };
+
+  self.limitReached = function() {
+    var count = self.$el.find(selItems).length;
+    return (self.options.limit && (count >= self.options.limit));
   };
 }
 
