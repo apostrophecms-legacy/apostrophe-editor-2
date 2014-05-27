@@ -97,10 +97,9 @@ function AposEditor2($el) {
       }
     });
 
-    // listen for editor modifier keys
-    var modifierOn = false;
+    // listen for shiftActive for power up/down nudge
     $('body').on('keydown', function(e) {
-      if (e.keyCode === 16) {
+      if (apos.shiftActive === true) {
         $('[data-move-item]').each(function() {
           $self = $(this);
           if ($self.attr('data-move-item') === 'up') {
@@ -110,13 +109,12 @@ function AposEditor2($el) {
             $self.children('i').toggleClass('icon-double-angle-down');
             $self.attr('data-move-item', 'bottom');
           }
-          modifierOn = true;
         });
       }
     });
 
     $('body').on('keyup', function(e) {
-      if (modifierOn === true) {
+      if (apos.shiftActive === true) {
         $('[data-move-item]').each(function() {
           $self = $(this);
           $self.children('i').removeClass('icon-double-angle-up');
@@ -126,7 +124,6 @@ function AposEditor2($el) {
           } else if ($self.attr('data-move-item') === 'bottom') {
             $self.attr('data-move-item', 'down');
           }
-          modifierOn = false;
         });
       }
     });
