@@ -200,3 +200,10 @@
 {
   background-color: @apos-base;
 }
+
+// In the editor we must always at least be able to see the controls
+// even if a widget is empty. -Tom and Joel
+.apos-area-editable .apos-widget
+{
+  min-height: 40px;
+}

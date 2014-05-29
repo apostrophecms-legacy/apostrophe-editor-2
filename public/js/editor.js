@@ -649,16 +649,20 @@ function AposEditor2($el) {
   };
 
   self.getDroppableAreas = function($draggable) {
+    // Lockups can only be dragged within the current area
     var betweenAreas = !$draggable.hasClass('apos-lockup');
-
     var $areas;
     if (betweenAreas) {
-      // Only the current area, and areas that are not full
+      // Only the current area, and areas that are not full; also
+      // rule out areas that do not allow the widget type in question
       $areas = $('.apos-area[data-editable]:not([data-text-only])').filter(function() {
         var editor = $(this).data('editor');
-        return ((!editor.limitReached()) || ($draggable.data('areaEditor') === editor));
+        if ((!editor.limitReached()) || ($draggable.data('areaEditor') === editor)) {
+          if (_.contains(editor.options.controls, $draggable.attr('data-type'))) {
+            return true;
+          }
         }
-      );
+      });
     } else {
       $areas = $draggable.closest('.apos-area[data-editable]');
     }
