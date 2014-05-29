@@ -110,3 +110,6 @@ After which you must make the proper exception in apostrophe-site's SanitizeHtml
 
 (TODO: make it possible to call `aposSingleton` with a type of `richText`. For now, use the `textOnly` option.)
 
+## Areas with No Text
+
+You can also have an area that does not allow rich text items at all. To request this, specify `richText: false` among the options you pass to `aposArea`. Only widgets, such as slideshows, will be offered on the "Add Content" menu.
