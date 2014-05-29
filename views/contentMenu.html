@@ -6,7 +6,7 @@
       {% for control in controls %}
         {# Bold, italic, etc. are not item types, here we pay attention only to controls that are #}
         {% if itemTypes[control] %}
-          <li data-add-item-type="{{ control }}"><i class="icon-{{ control }} fw icon-fw"></i> {{ __(itemTypes[control].label) | e }}</li>
+          <li data-add-item-type="{{ control }}"><i class="{{ itemTypes[control].icon }} fw icon-fw"></i> {{ __(itemTypes[control].label) | e }}</li>
         {% endif %}
       {% endfor %}
     </ul>
