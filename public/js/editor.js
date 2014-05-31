@@ -582,11 +582,29 @@ function AposEditor2($el) {
     });
   };
 
-  // Insert a newly created apos-widget, typically called by the widget's editor on save
+  // Insert a newly created apos-widget, typically called by the
+  // widget's editor on save of a new widget
+
   self.insertWidget = function($widget) {
     $widget.addClass('apos-item');
+    self.addButtonsToWidget($widget);
     self.insertItem($widget);
     self.respectLimit();
+  };
+
+  // Replace an existing widget, preserving any classes and
+  // attributes specific to the area editor, like lockups. Typically
+  // called by the widget's editor on save, so it can change
+  // attributes of the widget element itself
+
+  self.replaceWidget = function($old, $widget) {
+    var data = self.getWidgetData($old);
+    var lockup = data.lockup;
+    self.addButtonsToWidget($widget);
+    data = self.getWidgetData($widget);
+    data.lockup = lockup;
+    self.putWidgetData($widget, data);
+    $old.replaceWith($widget);
   };
 
   self.insertItem = function($item) {
