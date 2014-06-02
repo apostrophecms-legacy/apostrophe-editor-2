@@ -1068,22 +1068,24 @@ function AposEditor2($el) {
     }
     var data = self.serialize();
     if (JSON.stringify(data) !== JSON.stringify(self.previousData)) {
-      $.ajax({
-        url: '/apos/edit-area',
-        type: 'POST',
-        data: {
-          slug: self.$el.attr('data-slug'),
-          options: JSON.stringify(self.getAreaOptions(self.$el)),
-          content: JSON.stringify(data)
+      $.jsonCall(
+        '/apos/edit-area',
+        {
+          async: !sync,
+          dataType: 'html'
         },
-        async: !sync,
-        success: function() {
+        {
+          slug: self.$el.attr('data-slug'),
+          options: self.getAreaOptions(self.$el),
+          content: data
+        },
+        function() {
           self.previousData = data;
         },
-        error: function() {
+        function() {
           apos.log('save FAILED');
         }
-      });
+      );
     }
     self.checkEmptyAreas();
   };
