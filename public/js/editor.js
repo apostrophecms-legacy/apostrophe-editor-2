@@ -620,7 +620,6 @@ function AposEditor2($el) {
   // to the element being dragged.
   self.addSeparators = function($draggable) {
     var $areas = self.getDroppableAreas($draggable);
-
     // Drop zone at the top of every area, unless we are dragging the top item
     // in that particular area
 
@@ -667,6 +666,10 @@ function AposEditor2($el) {
   };
 
   self.getDroppableAreas = function($draggable) {
+    var richText;
+    if ($draggable.hasClass('apos-rich-text-item')) {
+      richText = true;
+    }
     // Lockups can only be dragged within the current area
     var betweenAreas = !$draggable.hasClass('apos-lockup');
     var $areas;
@@ -676,7 +679,7 @@ function AposEditor2($el) {
       $areas = $('.apos-area[data-editable]:not([data-text-only])').filter(function() {
         var editor = $(this).data('editor');
         if ((!editor.limitReached()) || ($draggable.data('areaEditor') === editor)) {
-          if (_.contains(editor.options.controls, $draggable.attr('data-type'))) {
+          if ((richText && (editor.options.richText !== false)) || _.contains(editor.options.controls, $draggable.attr('data-type'))) {
             return true;
           }
         }
