@@ -16,6 +16,8 @@ function AposEditor2($el) {
   // This clears the auto-populated Title attribute CKEditor puts on stuff, makes for ugly tooltips
   CKEDITOR.on('instanceReady',function(event){$(event.editor.element.$).attr('title','');});
 
+  CKEDITOR.plugins.addExternal('split', '/modules/editor-2/js/ckeditorPlugins/split/', 'plugin.js');
+
   var self = this;
   self.$el = $el;
 
@@ -380,6 +382,7 @@ function AposEditor2($el) {
       });
 
       var config = {
+        extraPlugins: 'split',
         toolbar: [ toolbar ],
         stylesSet: styles,
         on: {
@@ -392,6 +395,8 @@ function AposEditor2($el) {
             cmd.allowedContent = 'table tr th td';
           },
           instanceReady: function(ck) {
+            ck.editor.a2Area = self;
+            ck.editor.$a2Item = $richText.closest('.apos-item');
             ck.editor.removeMenuItem('tablecellproperties');
           }
         }
@@ -756,12 +761,17 @@ function AposEditor2($el) {
     });
   };
 
-  self.addRichText = function() {
+  self.addRichText = function(html, editNow) {
     self.doneEditingRichText(function() {
       var $text = apos.fromTemplate('.apos-rich-text-item');
       self.addButtonsToItem($text);
       self.insertItem($text);
-      self.editRichText($text.find('[data-rich-text]'));
+      if (html !== undefined) {
+        $text.find('[data-rich-text]').html(html);
+      }
+      if (editNow || (editNow === undefined)) {
+        self.editRichText($text.find('[data-rich-text]'));
+      }
       self.respectLimit();
     });
     return false;
