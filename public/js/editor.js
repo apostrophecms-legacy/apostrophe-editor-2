@@ -18,6 +18,10 @@ function AposEditor2($el) {
 
   CKEDITOR.plugins.addExternal('split', '/modules/editor-2/js/ckeditorPlugins/split/', 'plugin.js');
 
+  // This particular plugin has proven difficult for our users and therefore,
+  // we're removing it for now. --Joel (joel@punkave.com)
+  CKEDITOR.config.removePlugins = 'magicline';
+
   var self = this;
   self.$el = $el;
 
