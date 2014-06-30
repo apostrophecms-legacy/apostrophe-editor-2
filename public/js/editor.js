@@ -60,6 +60,16 @@ function AposEditor2($el) {
       // if the click came from such a menu
       self.dismissContextContentMenu();
 
+      // If there's any intial content items, remove them on selecting
+      // your first widget. Right now, we're parsing the data-options through
+      // self.options and using self.options.initialContent or what we think is
+      // the default from aposLocals.
+      var initialContent = self.options.initialContent || "Use the Add Content button to get started.",
+          sanitizedInitialContent = $(initialContent).text(),
+          $initialContentItem = self.$el.find('.apos-rich-text-item:contains('+ sanitizedInitialContent +')');
+
+      $initialContentItem.remove();
+
       if (itemType === 'richText') {
         return self.addRichText();
       } else {
