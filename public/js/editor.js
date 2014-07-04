@@ -64,11 +64,8 @@ function AposEditor2($el) {
       // your first widget. Right now, we're parsing the data-options through
       // self.options and using self.options.initialContent or what we think is
       // the default from aposLocals.
-      var initialContent = self.options.initialContent || "Use the Add Content button to get started.",
-          sanitizedInitialContent = $(initialContent).text(),
-          $initialContentItem = self.$el.find('.apos-rich-text-item:contains('+ sanitizedInitialContent +')');
 
-      $initialContentItem.remove();
+      self.removeInitialContent(self.$el, true);
 
       if (itemType === 'richText') {
         return self.addRichText();
@@ -322,6 +319,10 @@ function AposEditor2($el) {
   };
 
   self.editRichText = function($richText) {
+    // Remove any initial "click to type" content when we
+    // start actual editing
+    self.removeInitialContent(self.$el);
+
     if (self.$activeRichText && ($richText.attr('id') === self.$activeRichText.attr('id'))) {
       // Don't interfere with clicks on the current editor
       return true;
@@ -452,6 +453,18 @@ function AposEditor2($el) {
 
     });
     return false;
+  };
+
+  self.removeInitialContent = function($el, entireItem) {
+    if (entireItem) {
+      // We added a real item to an area that only contains a
+      // placeholder item which should be removed in its entirety
+      $el.find('.apos-rich-text-item:has([data-initial-content])').remove();
+    } else {
+      // We started editing such an item. Don't trash it,
+      // just remove the initial content <p> tag
+      $el.find('[data-initial-content]').remove();
+    }
   };
 
   self.doneEditingRichText = function(callback) {
