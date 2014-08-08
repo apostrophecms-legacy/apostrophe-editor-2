@@ -110,37 +110,6 @@ function AposEditor2($el) {
       }
     });
 
-    // listen for shiftActive for power up/down nudge
-    $('body').on('keydown', function(e) {
-      if (apos.shiftActive === true) {
-        $('[data-move-item]').each(function() {
-          $self = $(this);
-          if ($self.attr('data-move-item') === 'up') {
-            $self.children('i').toggleClass('icon-double-angle-up');
-            $self.attr('data-move-item', 'top');
-          } else if ($self.attr('data-move-item') === 'down') {
-            $self.children('i').toggleClass('icon-double-angle-down');
-            $self.attr('data-move-item', 'bottom');
-          }
-        });
-      }
-    });
-
-    $('body').on('keyup', function(e) {
-      if (apos.shiftActive === true) {
-        $('[data-move-item]').each(function() {
-          $self = $(this);
-          $self.children('i').removeClass('icon-double-angle-up');
-          $self.children('i').removeClass('icon-double-angle-down');
-          if ($self.attr('data-move-item') === 'top') {
-            $self.attr('data-move-item', 'up');
-          } else if ($self.attr('data-move-item') === 'bottom') {
-            $self.attr('data-move-item', 'down');
-          }
-        });
-      }
-    });
-
 
     // Switch a lockup between types (left, right, etc)
     self.$el.on('click', '[data-lockup-type]', function(event) {
@@ -1173,6 +1142,33 @@ AposEditor2.auto = function() {
   // An area was introduced via the admin UI, eg the body area of an event
   apos.on('newArea', function() {
     AposEditor2.enableAll();
+  });
+
+  // listen for shiftActive for power up/down nudge
+  apos.on('shiftDown', function() {
+    $('[data-move-item]').each(function() {
+      $self = $(this);
+      if ($self.attr('data-move-item') === 'up') {
+        $self.children('i').toggleClass('icon-double-angle-up');
+        $self.attr('data-move-item', 'top');
+      } else if ($self.attr('data-move-item') === 'down') {
+        $self.children('i').toggleClass('icon-double-angle-down');
+        $self.attr('data-move-item', 'bottom');
+      }
+    });
+  });
+
+  apos.on('shiftUp', function() {
+    $('[data-move-item]').each(function() {
+      $self = $(this);
+      $self.children('i').removeClass('icon-double-angle-up');
+      $self.children('i').removeClass('icon-double-angle-down');
+      if ($self.attr('data-move-item') === 'top') {
+        $self.attr('data-move-item', 'up');
+      } else if ($self.attr('data-move-item') === 'bottom') {
+        $self.attr('data-move-item', 'down');
+      }
+    });
   });
 };
 
