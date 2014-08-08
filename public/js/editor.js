@@ -1166,12 +1166,12 @@ AposEditor2.enableAll = function() {
 };
 
 AposEditor2.auto = function() {
-  // For areas present at page load
-  $('body').on('aposReady', function() {
+  // Enable areas in the main content of the page
+  apos.on('ready', function() {
     AposEditor2.enableAll();
   });
-  // For areas added later, this event is individually triggered
-  $('body').on('aposNewArea', function() {
+  // An area was introduced via the admin UI, eg the body area of an event
+  apos.on('newArea', function() {
     AposEditor2.enableAll();
   });
 };
