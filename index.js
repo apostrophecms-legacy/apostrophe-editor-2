@@ -21,6 +21,7 @@ function Construct(options, callback) {
   self.pushAsset('script', 'vendor/ckeditor/ckeditor', { when: 'user' });
   self.pushAsset('script', 'editor', { when: 'user' });
   self.pushAsset('stylesheet', 'editor', { when: 'user' });
+  self.pushAsset('stylesheet', '../js/vendor/ckeditor/skins/apostrophe/editor', { when: 'user' });
   self.pushAsset('template', 'itemButtons', { when: 'user' });
   self.pushAsset('template', 'lockedItemButtons', { when: 'user' });
   self.pushAsset('template', 'lockedWidgetButtons', { when: 'user' });

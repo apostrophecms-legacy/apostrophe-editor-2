@@ -404,6 +404,8 @@ function AposEditor2($el) {
         var html = $richText.html();
         if (html.length !== 0) {
           $richText.parents('[data-type="richText"]').removeClass('apos-empty');
+        } else {
+          $richText.parents('[data-type="richText"]').toggleClass('apos-empty', true);
         }
       });
 

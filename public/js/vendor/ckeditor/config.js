@@ -26,7 +26,7 @@ CKEDITOR.editorConfig = function( config ) {
 	// 	{ name: 'about' }
 	// ];
 
-
+  config.skin = 'apostrophe';
 	config.toolbarGroups = [
 		{ name: 'styles' },
 		{ name: 'basicstyles', groups: [ 'basicstyles' ] },
