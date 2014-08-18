@@ -16,7 +16,7 @@ function AposEditor2($el) {
   // This clears the auto-populated Title attribute CKEditor puts on stuff, makes for ugly tooltips
   CKEDITOR.on('instanceReady',function(event){$(event.editor.element.$).attr('title','');});
 
-  CKEDITOR.plugins.addExternal('split', '/modules/editor-2/js/ckeditorPlugins/split/', 'plugin.js');
+  CKEDITOR.plugins.addExternal('split', apos.data.prefix + '/modules/editor-2/js/ckeditorPlugins/split/', 'plugin.js');
 
   // This particular plugin has proven difficult for our users and therefore,
   // we're removing it for now. --Joel (joel@punkave.com)
