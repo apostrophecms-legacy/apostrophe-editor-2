@@ -465,6 +465,7 @@ function AposEditor2($el) {
       var $menu = $(data);
       self.$contentMenuTemplate = $menu.clone();
       self.$el.prepend($menu);
+      apos.emit('contentMenuReady');
       return callback();
     });
   };
