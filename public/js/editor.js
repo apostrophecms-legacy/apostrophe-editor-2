@@ -386,9 +386,12 @@ function AposEditor2($el) {
         }
       };
 
+      if (!toolbar.length) {
+        config.removePlugins = 'toolbar';
+      }
+
       var instance = instances[id] = CKEDITOR.inline(id, config);
       var itemActions = $(instance.element.$).parent().find('.apos-item-actions');
-
 
       instance.on('focus', function(){
         itemActions.hide();
