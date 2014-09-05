@@ -1294,7 +1294,7 @@ legend.cke_voice_label {
 
 .cke_toolbar
 {
-  
+
 }
 
 .cke_toolgroup,
@@ -1341,13 +1341,15 @@ a.cke_combo_button:focus,
  &::before
   {
     opacity: 1;
-  } 
+  }
 }
 
 .icon-bold { &::before {content: "\f032";} }
 .icon-italic { &::before {content: "\f033";} }
 .icon-table { &::before {content: "\f0ce";} }
 .icon-bulletedlist { &::before {content: "\f0ca";} }
+.icon-numberedlist { &::before {content: "\f0cb";} }
+.icon-blockquote { &::before {content: "\f10d";} }
 .icon-anchor { &::before {content: "\f13d";} }
 .icon-unlink { &::before {content: "\f127";} }
 .icon-link { &::before {content: "\f0c1";} }
@@ -1359,7 +1361,6 @@ a.cke_combo_button:focus,
 .cke_button__anchor { .icon-anchor(); }
 .cke_button__unlink { .icon-unlink(); }
 .cke_button__bulletedlist { .icon-bulletedlist(); }
+.cke_button__numberedlist { .icon-numberedlist(); }
+.cke_button__blockquote { .icon-blockquote(); }
 .cke_button__table { .icon-table(); }
-
-
-
