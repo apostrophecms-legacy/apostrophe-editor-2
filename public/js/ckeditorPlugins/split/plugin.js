@@ -136,7 +136,7 @@ CKEDITOR.plugins.add( 'split', {
             for (var attr, i = 0, attrs = node.$.attributes, l = attrs.length; i < l; i++) {
               html += ' ';
               attr = attrs.item(i);
-              html += attr.nodeName + '="' + apos.escapeHtml(attr.nodeValue) + '"';
+              html += attr.nodeName + '="' + apos.escapeHtml(attr.value) + '"';
             }
             if (!node.$.firstChild) {
               html += ' />';
