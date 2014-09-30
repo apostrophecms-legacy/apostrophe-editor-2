@@ -367,7 +367,7 @@ function AposEditor2($el) {
 
       // This will allow loading of extra plugins for each editor
       var extraPlugins = [ 'split' ];
-      _.each(self.options.plugins, function(widget) {
+      _.each([].concat(apos.data.editor.plugins, self.options.plugins || []), function(widget) {
         if (widget.path) {
           var plugin = CKEDITOR.plugins.get(widget.name);
           if (!plugin) {
