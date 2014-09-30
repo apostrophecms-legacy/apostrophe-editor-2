@@ -33,7 +33,7 @@ function Construct(options, callback) {
   };
 
   apos.pushGlobalData({
-    editor: {
+    editor2: {
       plugins: options.plugins || []
     }
   });
