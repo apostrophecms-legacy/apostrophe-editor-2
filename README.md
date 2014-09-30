@@ -120,7 +120,7 @@ Sometimes your users may want to add a slideshow or video in the middle of a tex
 
 ## CKEditor Plugins
 
-You can load extra plugins to CKEditor in your `app.js`:
+You can load extra CKEditor plugins into CKEditor in `app.js`, when you configure the `apostrophe-editor-2` module:
 
     'apostrophe-editor-2': {
       plugins: [
@@ -128,7 +128,7 @@ You can load extra plugins to CKEditor in your `app.js`:
       ]
     }
 
-Or with `aposArea()` thought `plugins` option:
+Or, if you only want them for certain areas, with `aposArea()` via the `plugins` option:
 
     {{
         aposArea(page, 'content', {
@@ -138,4 +138,4 @@ Or with `aposArea()` thought `plugins` option:
         })
     }}
 
-This will load file `/public/editor/plugins/headline/plugin.js`.
+This will instruct CKEditor to load the file `/public/editor/plugins/headline/plugin.js`.
