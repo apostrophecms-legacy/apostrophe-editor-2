@@ -32,6 +32,12 @@ function Construct(options, callback) {
     return apos.partial(name, data, __dirname + '/views');
   };
 
+  apos.pushGlobalData({
+    editor2: {
+      plugins: options.plugins || []
+    }
+  });
+
   app.post('/apos-editor-2/content-menu', function(req, res) {
     var controls;
     if (req.body.controls) {
@@ -71,7 +77,7 @@ function Construct(options, callback) {
         } else {
           return callback(null);
         }
-        
+
       }, callback);
     };
   });

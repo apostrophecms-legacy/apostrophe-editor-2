@@ -365,8 +365,21 @@ function AposEditor2($el) {
         }
       });
 
+      // This will allow loading of extra plugins for each editor
+      var extraPlugins = [ 'split' ];
+      _.each([].concat(apos.data.editor2.plugins, self.options.plugins || []), function(widget) {
+        if (widget.path) {
+          var plugin = CKEDITOR.plugins.get(widget.name);
+          if (!plugin) {
+            CKEDITOR.plugins.addExternal(widget.name, widget.path);
+          }
+        }
+        extraPlugins.push(widget.name || widget);
+      });
+      extraPlugins = extraPlugins.join(',');
+
       var config = {
-        extraPlugins: 'split',
+        extraPlugins: extraPlugins,
         toolbar: [ toolbar ],
         stylesSet: styles,
         on: {
