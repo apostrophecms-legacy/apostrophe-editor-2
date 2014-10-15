@@ -118,3 +118,24 @@ You can also have an area that does not allow rich text items at all. To request
 
 Sometimes your users may want to add a slideshow or video in the middle of a text. To make this easier, we've added an optional `split` control. If you include this control in the `controls` array, users are able to split a text item in half at the current cursor position. This opens up the possibilty of moving a widget into place between the two text items.
 
+## CKEditor Plugins
+
+You can load extra CKEditor plugins into CKEditor in `app.js`, when you configure the `apostrophe-editor-2` module:
+
+    'apostrophe-editor-2': {
+      plugins: [
+        { name: 'headline', path: '/editor/plugins/headline/' }
+      ]
+    }
+
+Or, if you only want them for certain areas, with `aposArea()` via the `plugins` option:
+
+    {{
+        aposArea(page, 'content', {
+          plugins: [
+            { name: 'headline', path: '/editor/plugins/headline/' }
+          ]
+        })
+    }}
+
+This will instruct CKEditor to load the file `/public/editor/plugins/headline/plugin.js`.

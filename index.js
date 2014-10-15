@@ -18,7 +18,7 @@ function Construct(options, callback) {
 
   // Tells ckeditor where to find the rest of itself despite minification
   self.pushAsset('script', 'beforeCkeditor', { when: 'user' });
-  self.pushAsset('script', 'vendor/ckeditor/ckeditor', { when: 'user' });
+  self.pushAsset('script', 'vendor/ckeditor/ckeditor', { when: 'user', preshrunk: true });
   self.pushAsset('script', 'editor', { when: 'user' });
   self.pushAsset('stylesheet', 'editor', { when: 'user' });
   self.pushAsset('stylesheet', '../js/vendor/ckeditor/skins/apostrophe/editor', { when: 'user' });
@@ -31,6 +31,12 @@ function Construct(options, callback) {
   self.render = function(name, data) {
     return apos.partial(name, data, __dirname + '/views');
   };
+
+  apos.pushGlobalData({
+    editor2: {
+      plugins: options.plugins || []
+    }
+  });
 
   app.post('/apos-editor-2/content-menu', function(req, res) {
     var controls;
@@ -71,7 +77,7 @@ function Construct(options, callback) {
         } else {
           return callback(null);
         }
-        
+
       }, callback);
     };
   });
