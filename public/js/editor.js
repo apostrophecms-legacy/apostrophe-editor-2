@@ -1109,6 +1109,7 @@ function AposEditor2($el) {
         },
         function() {
           self.previousData = data;
+          apos.emit('edited', self.$el);
         },
         function() {
           apos.log('save FAILED');
