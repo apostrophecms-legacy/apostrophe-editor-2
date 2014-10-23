@@ -525,7 +525,10 @@ function AposEditor2($el) {
       // this. Instead you can get the items out again by breaking the lockup with its
       // "unlock" button
       if ($item.hasClass('ui-draggable')) {
-        $item.draggable('destroy');
+        // Do this after yield to avoid a crash in jquery UI
+        apos.afterYield(function() {
+          $item.draggable('destroy');
+        });
       }
     } else {
       $item.draggable(self.draggableSettings);
@@ -934,7 +937,8 @@ function AposEditor2($el) {
         $(ui.draggable).remove();
       }
       self.disableDroppables();
-      self.changeOwners($item);
+      // $item is not defined here, get the item from the event
+      self.changeOwners($(ui.draggable));
     }
   };
 
