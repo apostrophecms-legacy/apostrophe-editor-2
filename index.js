@@ -1,5 +1,5 @@
-var extend = require('extend');
-var _ = require('lodash');
+/* jshint node:true */
+
 var clone = require('clone');
 
 module.exports = function(options, callback) {
@@ -28,10 +28,6 @@ function Construct(options, callback) {
   self.pushAsset('template', 'richText', { when: 'user' });
   self.pushAsset('template', 'itemSeparator', { when: 'user' });
 
-  self.render = function(name, data) {
-    return apos.partial(name, data, __dirname + '/views');
-  };
-
   apos.pushGlobalData({
     editor2: {
       plugins: options.plugins || []
@@ -46,11 +42,11 @@ function Construct(options, callback) {
       // So we don't inadvertently modify the original
       controls = clone(apos.defaultControls);
     }
-    richText = apos.sanitizeBoolean(req.body.richText, true);
+    var richText = apos.sanitizeBoolean(req.body.richText, true);
     if (richText) {
       controls.unshift('richText');
     }
-    return res.send(self.render('contentMenu', { controls: controls, itemTypes: apos.itemTypes, richText: richText, addLabel: req.body.addLabel }));
+    return res.send(self.render('contentMenu', { controls: controls, itemTypes: apos.itemTypes, richText: richText, addLabel: req.body.addLabel }, req));
   });
 
   apos.on('tasks:register', function(taskGroups) {
