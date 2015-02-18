@@ -423,6 +423,7 @@ function AposEditor2($el) {
         } else {
           $richText.parents('[data-type="richText"]').toggleClass('apos-empty', true);
         }
+        apos.emit('editorBlurred');
       });
 
       // Why is this necessary? Without it we don't get focus. If we don't use a timeout
