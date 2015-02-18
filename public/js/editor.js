@@ -1072,9 +1072,23 @@ function AposEditor2($el) {
       if ($item.hasClass('apos-widget')) {
         item = self.getWidgetData($item, true);
       } else if ($item.hasClass('apos-rich-text-item')) {
+        var $text = $item.find('[data-rich-text]');
+        // If it's an active contenteditable, use getData() to
+        // give ckeditor a chance to clean it up
+        var id = $text.attr('id');
+        var data;
+        if (id) {
+          var instance = instances[id];
+          if (instance) {
+            data = instance.getData();
+          }
+        }
+        if (!data) {
+          data = $item.find('[data-rich-text]').html();
+        }
         item = {
           type: 'richText',
-          content: $item.find('[data-rich-text]').html()
+          content: data
         };
       } else {
         apos.log('AposEditor2: unknown item type in serialize');
