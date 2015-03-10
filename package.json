@@ -22,8 +22,8 @@
   "author": "P'unk Avenue LLC",
   "license": "MIT",
   "dependencies": {
+    "clone": "^0.1.19",
     "extend": "~1.2.1",
-    "lodash": "2.4.x",
-    "clone": "~0.1.11"
+    "lodash": "2.4.x"
   }
 }
