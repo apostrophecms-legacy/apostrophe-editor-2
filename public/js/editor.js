@@ -323,7 +323,11 @@ function AposEditor2($el) {
         'unlink': 'Unlink',
         'insertUnorderedList': 'BulletedList',
         'insertNumberedList': 'NumberedList',
-        'insertTable': 'Table'
+        'insertTable': 'Table',
+        'left': 'JustifyLeft',
+        'center': 'JustifyCenter',
+        'right': 'JustifyRight',
+        'justify': 'JustifyBlock'
       };
 
       // Accept universal A2 or ckeditor-specific styleset definition.
@@ -366,7 +370,7 @@ function AposEditor2($el) {
       });
 
       // This will allow loading of extra plugins for each editor
-      var extraPlugins = [ 'split' ];
+      var extraPlugins = [ 'split', 'justify' ];
       _.each([].concat(apos.data.editor2.plugins, self.options.plugins || []), function(widget) {
         if (widget.path) {
           var plugin = CKEDITOR.plugins.get(widget.name);
