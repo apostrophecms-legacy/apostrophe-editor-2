@@ -81,3 +81,4 @@ function Construct(options, callback) {
 
   return setImmediate(function() { return callback(null); });
 }
+

@@ -366,7 +366,7 @@ function AposEditor2($el) {
       });
 
       // This will allow loading of extra plugins for each editor
-      var extraPlugins = [ 'split' ];
+      var extraPlugins = [ 'split', 'indent', 'indentblock' ];
       _.each([].concat(apos.data.editor2.plugins, self.options.plugins || []), function(widget) {
         if (widget.path) {
           var plugin = CKEDITOR.plugins.get(widget.name);
@@ -382,6 +382,7 @@ function AposEditor2($el) {
         extraPlugins: extraPlugins,
         toolbar: [ toolbar ],
         stylesSet: styles,
+        indentClasses: [ 'apos-indent1', 'apos-indent2', 'apos-indent2', 'apos-indent3', 'apos-indent4', 'apos-indent5' ],
         on: {
           // TODO these event handlers should check whether the ckeditor instance
           // really belongs to apostrophe and play nice if not
