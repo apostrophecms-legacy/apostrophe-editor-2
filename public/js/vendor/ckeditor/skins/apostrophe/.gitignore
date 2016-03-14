@@ -1,1 +1,4 @@
-editor.css
+# We need to commit and publish this! Otherwise if someone just doesn't happen to test without
+# minify before deploying they wind up with no CSS and no toolbars. -Tom and Austin
+
+#editor.css
