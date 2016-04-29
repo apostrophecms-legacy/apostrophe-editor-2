@@ -408,6 +408,10 @@ function AposEditor2($el) {
         config.removePlugins = 'toolbar';
       }
 
+      if (apos.data.editor2.config) {
+        _.extend(config, apos.data.editor2.config);
+      }
+
       var instance = instances[id] = CKEDITOR.inline(id, config);
       var itemActions = $(instance.element.$).parent().find('.apos-item-actions');
 
