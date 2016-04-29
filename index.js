@@ -31,7 +31,9 @@ function Construct(options, callback) {
 
   apos.pushGlobalData({
     editor2: {
-      plugins: options.plugins || []
+      plugins: options.plugins || [],
+      // overrides properties of the ckeditor config object we build via _.extend
+      config: options.config
     }
   });
 

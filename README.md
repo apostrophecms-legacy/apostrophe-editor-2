@@ -139,3 +139,13 @@ Or, if you only want them for certain areas, with `aposArea()` via the `plugins`
     }}
 
 This will instruct CKEditor to load the file `/public/editor/plugins/headline/plugin.js`.
+
+## Extra ckeditor configuration
+
+You can add custom properties to the `config` object passed when instantiating ckeditor by setting the `config` option of the module. This option is merged with the `config` object that `apostrophe-editor-2` builds. For example, let's configure the `justify` plugin to use classes rather than style attributes:
+
+    'apostrophe-editor-2': {
+      config: {
+        justifyClasses: [ 'apos-align-left', 'apos-align-center', 'apos-align-right', 'apos-align-justify' ]
+      }
+    },
