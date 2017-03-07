@@ -1,8 +1,12 @@
-# apostrophe-editor-2
+# THIS MODULE IS FOR 0.5.X ONLY, DEPRECATED FOR ALL NEW PROJECTS
 
-`apostrophe-editor-2` replaces Apostrophe's default content editor with a friendlier and more reliable system that puts the design intentions of the developer first. We now consider `apostrophe-editor-2` to be the preferred editor and are deprecating the original A2 editor. The new editor is included in the sandbox.
+You do not need this module for your new Apostrophe project and it will not work with it. See the [apostrophe documentation](http://apostrophecms.org) for more information about Apostrophe 2.x.
 
-To switch it on for an existing project, just include this module and the `apostrophe-ui-2` module in your `apostrophe-site` configuration in `app.js`:
+## apostrophe-editor-2
+
+`apostrophe-editor-2` is the standard editor for projects built with Apostrophe 0.5.x, an OLD version of Apostrophe. 
+
+To switch it on for an existing 0.5.x project (which would be REALLY, REALLY old at this point if it doesn't already use it), just include this module and the `apostrophe-ui-2` module in your `apostrophe-site` configuration in `app.js`:
 
     // Must be first
     'apostrophe-ui-2': { },
